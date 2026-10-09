@@ -65,7 +65,7 @@ MyRecipes_Luque/
 
 1. Documentation API + maquette *(fait)*
 2. Navigation drawer + squelette des écrans *(fait)*
-3. Icône launcher + palette
+3. Icône launcher + palette *(fait)*
 4. Liste des catégories
 5. Liste des recettes par catégorie
 6. Écran détail recette

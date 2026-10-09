@@ -2,4 +2,34 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Identité MyRecipes (docs/maquette.md) -->
+    <color name="brand_terracotta">#FF8B4A3B</color>
+    <color name="brand_brown">#FF3D2314</color>
+    <color name="brand_peach">#FFF5C9B0</color>
+    <color name="brand_coral">#FFE8917A</color>
+    <color name="brand_cream">#FFF5EDE6</color>
+    <color name="brand_surface">#FFFFF8F5</color>
+
+    <color name="md_theme_light_primary">#FF8B4A3B</color>
+    <color name="md_theme_light_onPrimary">#FFF5EDE6</color>
+    <color name="md_theme_light_primaryContainer">#FFF5C9B0</color>
+    <color name="md_theme_light_onPrimaryContainer">#FF3D2314</color>
+    <color name="md_theme_light_secondary">#FFE8917A</color>
+    <color name="md_theme_light_onSecondary">#FF3D2314</color>
+    <color name="md_theme_light_background">#FFFFF8F5</color>
+    <color name="md_theme_light_onBackground">#FF3D2314</color>
+    <color name="md_theme_light_surface">#FFFFF8F5</color>
+    <color name="md_theme_light_onSurface">#FF3D2314</color>
+
+    <color name="md_theme_dark_primary">#FFE8917A</color>
+    <color name="md_theme_dark_onPrimary">#FF3D2314</color>
+    <color name="md_theme_dark_primaryContainer">#FF8B4A3B</color>
+    <color name="md_theme_dark_onPrimaryContainer">#FFF5EDE6</color>
+    <color name="md_theme_dark_secondary">#FFF5C9B0</color>
+    <color name="md_theme_dark_onSecondary">#FF3D2314</color>
+    <color name="md_theme_dark_background">#FF2A180E</color>
+    <color name="md_theme_dark_onBackground">#FFF5EDE6</color>
+    <color name="md_theme_dark_surface">#FF3D2314</color>
+    <color name="md_theme_dark_onSurface">#FFF5EDE6</color>
 </resources>
