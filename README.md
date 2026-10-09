@@ -64,7 +64,7 @@ MyRecipes_Luque/
 ## Feuille de route (features)
 
 1. Documentation API + maquette *(fait)*
-2. Navigation drawer + squelette des écrans
+2. Navigation drawer + squelette des écrans *(fait)*
 3. Icône launcher + palette
 4. Liste des catégories
 5. Liste des recettes par catégorie

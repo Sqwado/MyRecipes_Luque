@@ -1,3 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyRecipes_Luque</string>
+    <string name="app_name">MyRecipes</string>
+    <string name="nav_categories">Categories</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_header_subtitle">Découvrir · Chercher · Favoris</string>
+    <string name="nav_open_drawer">Ouvrir le menu</string>
+    <string name="nav_close_drawer">Fermer le menu</string>
+    <string name="placeholder_categories">Liste des catégories (à venir)</string>
+    <string name="placeholder_search">Recherche de recettes (à venir)</string>
+    <string name="placeholder_favorites">Recettes favorites (à venir)</string>
 </resources>
