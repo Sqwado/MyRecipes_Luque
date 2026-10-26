@@ -7,10 +7,12 @@
     <string name="nav_header_subtitle">Découvrir · Chercher · Favoris</string>
     <string name="nav_open_drawer">Ouvrir le menu</string>
     <string name="nav_close_drawer">Fermer le menu</string>
-    <string name="placeholder_categories">Liste des catégories (à venir)</string>
     <string name="placeholder_search">Recherche de recettes (à venir)</string>
     <string name="placeholder_favorites">Recettes favorites (à venir)</string>
-    <string name="placeholder_recipes_for_category">%1$s Recipes (liste à venir)</string>
+    <string name="placeholder_recipe_detail">%1$s\n\nDétail à venir</string>
     <string name="category_thumb_description">Vignette de la catégorie</string>
+    <string name="recipe_thumb_description">Vignette de la recette</string>
     <string name="error_loading_categories">Impossible de charger les catégories.\nVérifie ta connexion puis réessaie.</string>
+    <string name="error_loading_recipes">Impossible de charger les recettes.\nVérifie ta connexion puis réessaie.</string>
+    <string name="empty_recipes">Aucune recette trouvée pour cette catégorie.</string>
 </resources>

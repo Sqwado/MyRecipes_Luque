@@ -67,7 +67,7 @@ MyRecipes_Luque/
 2. Navigation drawer + squelette des écrans *(fait)*
 3. Icône launcher + palette *(fait)*
 4. Liste des catégories *(fait)*
-5. Liste des recettes par catégorie
+5. Liste des recettes par catégorie *(fait)*
 6. Écran détail recette
 7. Custom View nutri-score
 8. Recherche

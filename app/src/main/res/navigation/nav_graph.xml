@@ -23,6 +23,22 @@
         <argument
             android:name="categoryName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_recipesFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.myrecipes_luque.ui.detail.RecipeDetailFragment"
+        android:label="{mealName}"
+        tools:layout="@layout/fragment_recipe_detail">
+        <argument
+            android:name="mealId"
+            app:argType="string" />
+        <argument
+            android:name="mealName"
+            app:argType="string" />
     </fragment>
 
     <fragment
