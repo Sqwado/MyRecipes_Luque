@@ -1,20 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground"
     tools:context=".ui.detail.RecipeDetailFragment">
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/content_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/spacing_huge">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_hero"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_hero_height"
+                android:background="@drawable/bg_placeholder_thumb"
+                android:contentDescription="@string/recipe_photo_description"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.MyRecipes.DetailHero"
+                tools:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/detail_content_padding_horizontal"
+                android:paddingTop="@dimen/spacing_xxl">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group_meta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="@dimen/detail_chip_spacing"
+                    app:singleLine="false">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_category"
+                        style="@style/Widget.Material3.Chip.Assist.Elevated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        tools:text="Chicken" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_area"
+                        style="@style/Widget.Material3.Chip.Assist.Elevated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        tools:text="Japanese" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/detail_section_spacing"
+                    android:text="@string/section_instructions"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/text_instructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:lineSpacingExtra="@dimen/spacing_xs"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurface"
+                    tools:text="Preheat oven to 350° F..." />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/detail_section_spacing"
+                    android:text="@string/section_ingredients"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorPrimary" />
+
+                <LinearLayout
+                    android:id="@+id/container_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    android:orientation="vertical"
+                    android:showDividers="middle"
+                    android:divider="?android:attr/listDivider" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/detail_section_spacing"
+                    android:text="@string/action_add_favorite" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
     <TextView
-        android:id="@+id/placeholder_text"
+        android:id="@+id/text_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="@dimen/spacing_huge"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceBodyLarge"
-        android:textColor="?attr/colorOnSurface"
-        tools:text="Détail recette (à venir)" />
+        android:textColor="?attr/colorError"
+        android:visibility="gone" />
 
 </FrameLayout>

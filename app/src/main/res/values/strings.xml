@@ -9,11 +9,17 @@
     <string name="nav_close_drawer">Fermer le menu</string>
     <string name="placeholder_search">Recherche de recettes (à venir)</string>
     <string name="placeholder_favorites">Recettes favorites (à venir)</string>
-    <string name="placeholder_recipe_detail">%1$s\n\nDétail à venir</string>
     <string name="category_thumb_description">Vignette de la catégorie</string>
     <string name="recipe_thumb_description">Vignette de la recette</string>
+    <string name="recipe_photo_description">Photo de la recette</string>
     <string name="error_loading_categories">Impossible de charger les catégories.\nVérifie ta connexion puis réessaie.</string>
     <string name="error_loading_recipes">Impossible de charger les recettes.\nVérifie ta connexion puis réessaie.</string>
+    <string name="error_loading_recipe_detail">Impossible de charger le détail de la recette.\nVérifie ta connexion puis réessaie.</string>
     <string name="empty_recipes">Aucune recette trouvée pour cette catégorie.</string>
     <string name="recipes_screen_title">%1$s Recipes</string>
+    <string name="section_instructions">Instructions</string>
+    <string name="section_ingredients">Ingrédients</string>
+    <string name="action_add_favorite">Ajouter aux favoris</string>
+    <string name="favorite_coming_soon">Persistance des favoris à venir</string>
+    <string name="value_unavailable">—</string>
 </resources>

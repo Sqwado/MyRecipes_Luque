@@ -9,11 +9,17 @@
     <string name="nav_close_drawer">Close menu</string>
     <string name="placeholder_search">Recipe search (coming soon)</string>
     <string name="placeholder_favorites">Favorite recipes (coming soon)</string>
-    <string name="placeholder_recipe_detail">%1$s\n\nDetails coming soon</string>
     <string name="category_thumb_description">Category thumbnail</string>
     <string name="recipe_thumb_description">Recipe thumbnail</string>
+    <string name="recipe_photo_description">Recipe photo</string>
     <string name="error_loading_categories">Unable to load categories.\nCheck your connection and try again.</string>
     <string name="error_loading_recipes">Unable to load recipes.\nCheck your connection and try again.</string>
+    <string name="error_loading_recipe_detail">Unable to load recipe details.\nCheck your connection and try again.</string>
     <string name="empty_recipes">No recipes found for this category.</string>
     <string name="recipes_screen_title">%1$s Recipes</string>
+    <string name="section_instructions">Instructions</string>
+    <string name="section_ingredients">Ingredients</string>
+    <string name="action_add_favorite">Add to favorites</string>
+    <string name="favorite_coming_soon">Favorites persistence coming soon</string>
+    <string name="value_unavailable">—</string>
 </resources>

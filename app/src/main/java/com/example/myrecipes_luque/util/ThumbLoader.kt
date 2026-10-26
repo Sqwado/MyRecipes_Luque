@@ -22,4 +22,18 @@ object ThumbLoader {
             .transition(DrawableTransitionOptions.withCrossFade(150))
             .into(imageView)
     }
+
+    fun loadHero(imageView: ImageView, url: String?) {
+        val heightPx = imageView.resources.getDimensionPixelSize(R.dimen.detail_hero_height)
+
+        Glide.with(imageView)
+            .load(url)
+            .placeholder(R.drawable.bg_placeholder_thumb)
+            .error(R.drawable.bg_placeholder_thumb)
+            .override(heightPx * 2, heightPx)
+            .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .transition(DrawableTransitionOptions.withCrossFade(200))
+            .into(imageView)
+    }
 }

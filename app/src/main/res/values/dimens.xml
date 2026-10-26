@@ -33,4 +33,12 @@
     <dimen name="nav_header_padding">16dp</dimen>
     <dimen name="nav_header_logo_size">56dp</dimen>
     <dimen name="nav_header_logo_margin_bottom">12dp</dimen>
+
+    <!-- Recipe detail -->
+    <dimen name="detail_hero_height">220dp</dimen>
+    <dimen name="detail_content_padding_horizontal">20dp</dimen>
+    <dimen name="detail_section_spacing">20dp</dimen>
+    <dimen name="detail_chip_spacing">8dp</dimen>
+    <dimen name="detail_hero_corner_radius">0dp</dimen>
+    <dimen name="detail_ingredient_padding_vertical">8dp</dimen>
 </resources>

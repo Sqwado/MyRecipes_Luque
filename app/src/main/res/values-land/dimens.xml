@@ -11,4 +11,8 @@
     <dimen name="item_content_margin_start">12dp</dimen>
 
     <dimen name="nav_header_height">140dp</dimen>
+
+    <dimen name="detail_hero_height">160dp</dimen>
+    <dimen name="detail_content_padding_horizontal">16dp</dimen>
+    <dimen name="detail_section_spacing">12dp</dimen>
 </resources>

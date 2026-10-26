@@ -40,6 +40,11 @@
         <item name="cornerSize">@dimen/item_corner_radius</item>
     </style>
 
+    <style name="ShapeAppearance.MyRecipes.DetailHero" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/detail_hero_corner_radius</item>
+    </style>
+
     <style name="Widget.MyRecipes.Card" parent="Widget.Material3.CardView.Elevated">
         <item name="cardBackgroundColor">@color/md_theme_surface_card</item>
         <item name="cardElevation">@dimen/card_elevation</item>
