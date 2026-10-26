@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/brand_surface"
+    android:background="?android:attr/colorBackground"
     tools:context=".ui.detail.RecipeDetailFragment">
 
     <TextView
@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="24dp"
+        android:padding="@dimen/spacing_huge"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceBodyLarge"
-        android:textColor="@color/brand_brown"
+        android:textColor="?attr/colorOnSurface"
         tools:text="Détail recette (à venir)" />
 
 </FrameLayout>

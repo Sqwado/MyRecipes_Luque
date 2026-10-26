@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing -->
+    <dimen name="spacing_xxs">2dp</dimen>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">6dp</dimen>
+    <dimen name="spacing_md">8dp</dimen>
+    <dimen name="spacing_lg">12dp</dimen>
+    <dimen name="spacing_xl">14dp</dimen>
+    <dimen name="spacing_xxl">16dp</dimen>
+    <dimen name="spacing_xxxl">20dp</dimen>
+    <dimen name="spacing_huge">24dp</dimen>
+    <dimen name="spacing_error">32dp</dimen>
+
+    <!-- Screen / list -->
+    <dimen name="screen_horizontal_margin">16dp</dimen>
+    <dimen name="list_vertical_padding">8dp</dimen>
+    <dimen name="list_bottom_padding">24dp</dimen>
+
+    <!-- List item card -->
+    <dimen name="item_card_margin_horizontal">16dp</dimen>
+    <dimen name="item_card_margin_vertical">7dp</dimen>
+    <dimen name="item_card_padding">14dp</dimen>
+    <dimen name="item_thumb_size">64dp</dimen>
+    <dimen name="item_content_margin_start">14dp</dimen>
+    <dimen name="item_corner_radius">14dp</dimen>
+    <dimen name="card_corner_radius">16dp</dimen>
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_stroke_width">0dp</dimen>
+
+    <!-- Nav header -->
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="nav_header_padding">16dp</dimen>
+    <dimen name="nav_header_logo_size">56dp</dimen>
+    <dimen name="nav_header_logo_margin_bottom">12dp</dimen>
+</resources>

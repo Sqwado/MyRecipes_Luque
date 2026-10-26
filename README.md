@@ -68,6 +68,7 @@ MyRecipes_Luque/
 3. Icône launcher + palette *(fait)*
 4. Liste des catégories *(fait)*
 5. Liste des recettes par catégorie *(fait)*
+5b. Standard UI (dimens, i18n, landscape, thumbs arrondis) *(fait)*
 6. Écran détail recette
 7. Custom View nutri-score
 8. Recherche

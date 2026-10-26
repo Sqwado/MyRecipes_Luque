@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.data.remote.MealDbClient
 import com.example.myrecipes_luque.databinding.FragmentRecipesBinding
@@ -43,8 +43,9 @@ class RecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val categoryName = requireArguments().getString(ARG_CATEGORY_NAME).orEmpty()
+        val spanCount = resources.getInteger(R.integer.list_span_count)
 
-        binding.recyclerRecipes.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerRecipes.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerRecipes.adapter = adapter
         loadRecipes(categoryName)
     }

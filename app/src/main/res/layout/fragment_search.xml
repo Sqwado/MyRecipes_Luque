@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
     tools:context=".ui.search.SearchFragment">
 
     <TextView
@@ -10,9 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="24dp"
+        android:padding="@dimen/spacing_huge"
         android:text="@string/placeholder_search"
+        android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceBodyLarge"
-        android:textAlignment="center" />
+        android:textColor="?attr/colorOnSurface" />
 
 </FrameLayout>

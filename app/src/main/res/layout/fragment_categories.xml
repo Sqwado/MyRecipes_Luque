@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/brand_surface"
+    android:background="?android:attr/colorBackground"
     tools:context=".ui.categories.CategoriesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -12,8 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingVertical="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:paddingHorizontal="@dimen/spacing_xs"
+        android:paddingTop="@dimen/list_vertical_padding"
+        android:paddingBottom="@dimen/list_bottom_padding"
         tools:listitem="@layout/item_category" />
 
     <ProgressBar
@@ -29,10 +29,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="24dp"
+        android:padding="@dimen/spacing_huge"
         android:textAlignment="center"
         android:textAppearance="?attr/textAppearanceBodyLarge"
-        android:textColor="@color/brand_terracotta"
+        android:textColor="?attr/colorError"
         android:visibility="gone"
         tools:text="@string/error_loading_categories"
         tools:visibility="visible" />

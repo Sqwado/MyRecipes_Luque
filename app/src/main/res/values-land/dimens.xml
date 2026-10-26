@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_horizontal_margin">24dp</dimen>
+    <dimen name="list_vertical_padding">6dp</dimen>
+    <dimen name="list_bottom_padding">16dp</dimen>
+
+    <dimen name="item_card_margin_horizontal">8dp</dimen>
+    <dimen name="item_card_margin_vertical">4dp</dimen>
+    <dimen name="item_card_padding">10dp</dimen>
+    <dimen name="item_thumb_size">56dp</dimen>
+    <dimen name="item_content_margin_start">12dp</dimen>
+
+    <dimen name="nav_header_height">140dp</dimen>
+</resources>
