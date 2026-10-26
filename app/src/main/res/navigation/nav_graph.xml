@@ -9,7 +9,21 @@
         android:id="@+id/categoriesFragment"
         android:name="com.example.myrecipes_luque.ui.categories.CategoriesFragment"
         android:label="@string/nav_categories"
-        tools:layout="@layout/fragment_categories" />
+        tools:layout="@layout/fragment_categories">
+        <action
+            android:id="@+id/action_categoriesFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="com.example.myrecipes_luque.ui.recipes.RecipesFragment"
+        android:label="{categoryName} Recipes"
+        tools:layout="@layout/fragment_recipes">
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"

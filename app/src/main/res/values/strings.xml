@@ -10,4 +10,7 @@
     <string name="placeholder_categories">Liste des catégories (à venir)</string>
     <string name="placeholder_search">Recherche de recettes (à venir)</string>
     <string name="placeholder_favorites">Recettes favorites (à venir)</string>
+    <string name="placeholder_recipes_for_category">%1$s Recipes (liste à venir)</string>
+    <string name="category_thumb_description">Vignette de la catégorie</string>
+    <string name="error_loading_categories">Impossible de charger les catégories.\nVérifie ta connexion puis réessaie.</string>
 </resources>
