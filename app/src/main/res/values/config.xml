@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TheMealDB API -->
+    <string name="mealdb_base_url" translatable="false">https://www.themealdb.com/api/json/v1/1/</string>
+
+    <!-- Cache HTTP OkHttp -->
+    <integer name="http_cache_size_mb">10</integer>
+    <integer name="http_cache_max_age_seconds">300</integer>
+    <integer name="http_cache_max_stale_seconds">86400</integer>
+
+    <!-- Timeouts réseau (secondes) -->
+    <integer name="http_connect_timeout_seconds">15</integer>
+    <integer name="http_read_timeout_seconds">20</integer>
+</resources>

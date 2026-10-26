@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.myrecipes_luque.data.model.Category
 import com.example.myrecipes_luque.databinding.ItemCategoryBinding
+import com.example.myrecipes_luque.util.ThumbLoader
 
 class CategoriesAdapter(
     private val onCategoryClick: (Category) -> Unit,
@@ -32,11 +32,7 @@ class CategoriesAdapter(
 
         fun bind(category: Category) {
             binding.textName.text = category.name
-            Glide.with(binding.imageThumb)
-                .load(category.thumbUrl)
-                .centerCrop()
-                .into(binding.imageThumb)
-
+            ThumbLoader.load(binding.imageThumb, category.thumbUrl)
             binding.root.setOnClickListener {
                 onCategoryClick(category)
             }
