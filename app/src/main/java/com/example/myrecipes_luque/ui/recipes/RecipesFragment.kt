@@ -13,6 +13,7 @@ import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.data.remote.MealDbClient
 import com.example.myrecipes_luque.databinding.FragmentRecipesBinding
 import com.example.myrecipes_luque.ui.detail.RecipeDetailFragment
+import com.example.myrecipes_luque.util.setupScrollToTop
 import kotlinx.coroutines.launch
 
 class RecipesFragment : Fragment() {
@@ -47,6 +48,10 @@ class RecipesFragment : Fragment() {
 
         binding.recyclerRecipes.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerRecipes.adapter = adapter
+        binding.recyclerRecipes.setupScrollToTop(
+            fab = binding.fabScrollTop,
+            threshold = resources.getInteger(R.integer.scroll_top_threshold),
+        )
         loadRecipes(categoryName)
     }
 
@@ -54,6 +59,7 @@ class RecipesFragment : Fragment() {
         binding.progress.isVisible = true
         binding.textError.isVisible = false
         binding.recyclerRecipes.isVisible = false
+        binding.fabScrollTop.isVisible = false
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {

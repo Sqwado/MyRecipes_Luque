@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,9 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
+        android:overScrollMode="never"
         android:paddingHorizontal="@dimen/spacing_xs"
         android:paddingTop="@dimen/list_vertical_padding"
         android:paddingBottom="@dimen/list_bottom_padding"
+        android:scrollbars="none"
         tools:listitem="@layout/item_recipe" />
 
     <ProgressBar
@@ -21,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:indeterminateTint="?attr/colorPrimary"
         android:visibility="gone"
         tools:visibility="visible" />
 
@@ -35,6 +39,19 @@
         android:textColor="?attr/colorError"
         android:visibility="gone"
         tools:text="@string/error_loading_recipes"
+        tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_scroll_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/scroll_to_top"
+        android:visibility="gone"
+        app:backgroundTint="?attr/colorPrimary"
+        app:srcCompat="@drawable/ic_arrow_upward"
+        app:tint="?attr/colorOnPrimary"
         tools:visibility="visible" />
 
 </FrameLayout>

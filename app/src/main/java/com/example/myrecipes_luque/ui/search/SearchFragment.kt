@@ -13,15 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.data.model.MealSummary
 import com.example.myrecipes_luque.data.remote.MealDbClient
 import com.example.myrecipes_luque.databinding.FragmentSearchBinding
 import com.example.myrecipes_luque.ui.detail.RecipeDetailFragment
 import com.example.myrecipes_luque.ui.recipes.RecipesAdapter
+import com.example.myrecipes_luque.util.setupScrollToTop
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -32,9 +30,6 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var searchJob: Job? = null
-    private val scrollTopThreshold by lazy {
-        resources.getInteger(R.integer.scroll_top_threshold)
-    }
 
     private val adapter = RecipesAdapter { meal ->
         hideKeyboard()
@@ -61,24 +56,20 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupSearch()
-        setupScrollToTop()
     }
 
     private fun setupRecyclerView() {
         val spanCount = resources.getInteger(R.integer.list_span_count)
-        val layoutManager = GridLayoutManager(requireContext(), spanCount)
-        binding.recyclerSearch.layoutManager = layoutManager
+        binding.recyclerSearch.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerSearch.adapter = adapter
-
-        binding.recyclerSearch.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy != 0 && binding.editSearch.hasFocus()) {
-                    hideKeyboard()
-                }
-                binding.fabScrollTop.isVisible =
-                    layoutManager.findFirstVisibleItemPosition() > scrollTopThreshold
+        binding.recyclerSearch.setupScrollToTop(
+            fab = binding.fabScrollTop,
+            threshold = resources.getInteger(R.integer.scroll_top_threshold),
+        ) { dy ->
+            if (dy != 0 && binding.editSearch.hasFocus()) {
+                hideKeyboard()
             }
-        })
+        }
     }
 
     private fun setupSearch() {
@@ -99,36 +90,11 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun setupScrollToTop() {
-        binding.fabScrollTop.setOnClickListener { scrollToTop() }
-    }
-
     private fun hideKeyboard() {
         val focus = binding.editSearch
         focus.clearFocus()
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(focus.windowToken, 0)
-    }
-
-    /** Retour en haut à durée fixe, comme sur M2Tmdb. */
-    private fun scrollToTop() {
-        val recycler = binding.recyclerSearch
-        val layoutManager = recycler.layoutManager as? LinearLayoutManager ?: return
-        val firstVisible = layoutManager.findFirstVisibleItemPosition()
-        if (firstVisible <= 0) return
-
-        if (firstVisible > SCROLL_TOP_NEAR_ITEMS) {
-            layoutManager.scrollToPositionWithOffset(SCROLL_TOP_NEAR_ITEMS, 0)
-        }
-        recycler.post {
-            val scroller = object : LinearSmoothScroller(requireContext()) {
-                override fun getVerticalSnapPreference(): Int = SNAP_TO_START
-                override fun calculateTimeForScrolling(dx: Int): Int = SCROLL_TOP_DURATION_MS
-                override fun calculateTimeForDeceleration(dx: Int): Int = SCROLL_TOP_DURATION_MS
-            }
-            scroller.targetPosition = 0
-            layoutManager.startSmoothScroll(scroller)
-        }
     }
 
     private fun scheduleSearch(query: String) {
@@ -193,10 +159,5 @@ class SearchFragment : Fragment() {
         searchJob?.cancel()
         super.onDestroyView()
         _binding = null
-    }
-
-    private companion object {
-        const val SCROLL_TOP_NEAR_ITEMS = 12
-        const val SCROLL_TOP_DURATION_MS = 400
     }
 }
