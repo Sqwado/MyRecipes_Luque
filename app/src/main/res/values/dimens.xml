@@ -41,4 +41,10 @@
     <dimen name="detail_chip_spacing">8dp</dimen>
     <dimen name="detail_hero_corner_radius">0dp</dimen>
     <dimen name="detail_ingredient_padding_vertical">8dp</dimen>
+
+    <!-- Nutri-score -->
+    <dimen name="nutri_bar_height">12dp</dimen>
+    <dimen name="nutri_knob_radius">8dp</dimen>
+    <dimen name="nutri_card_padding">12dp</dimen>
+    <dimen name="nutri_card_corner">14dp</dimen>
 </resources>

@@ -12,6 +12,7 @@ import com.example.myrecipes_luque.data.model.MealDetail
 import com.example.myrecipes_luque.data.remote.MealDbClient
 import com.example.myrecipes_luque.databinding.FragmentRecipeDetailBinding
 import com.example.myrecipes_luque.databinding.ItemIngredientBinding
+import com.example.myrecipes_luque.util.NutriScoreCalculator
 import com.example.myrecipes_luque.util.ThumbLoader
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -69,6 +70,11 @@ class RecipeDetailFragment : Fragment() {
         val unavailable = getString(R.string.value_unavailable)
         binding.chipCategory.text = meal.category?.takeIf { it.isNotBlank() } ?: unavailable
         binding.chipArea.text = meal.area?.takeIf { it.isNotBlank() } ?: unavailable
+
+        val nutriScore = NutriScoreCalculator.compute(meal)
+        binding.nutriScoreView.setScorePercent(nutriScore)
+        binding.textNutriScore.text = getString(R.string.nutri_score_value, nutriScore)
+
         binding.textInstructions.text =
             meal.instructions?.trim()?.takeIf { it.isNotEmpty() } ?: unavailable
 

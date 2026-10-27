@@ -19,6 +19,10 @@
     <string name="recipes_screen_title">%1$s Recipes</string>
     <string name="section_instructions">Instructions</string>
     <string name="section_ingredients">Ingrédients</string>
+    <string name="section_nutri_score">Nutri-score</string>
+    <string name="nutri_score_value">%1$d %%</string>
+    <string name="nutri_score_a11y">Nutri-score estimé : %1$d pour cent</string>
+    <string name="nutri_score_hint">Estimation locale (TheMealDB ne fournit pas de calories)</string>
     <string name="action_add_favorite">Ajouter aux favoris</string>
     <string name="favorite_coming_soon">Persistance des favoris à venir</string>
     <string name="value_unavailable">—</string>

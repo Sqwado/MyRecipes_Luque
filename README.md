@@ -70,7 +70,7 @@ MyRecipes_Luque/
 5. Liste des recettes par catégorie *(fait)*
 5b. Standard UI (dimens, i18n, landscape, thumbs arrondis) *(fait)*
 6. Écran détail recette *(fait)*
-7. Custom View nutri-score
+7. Custom View nutri-score *(fait)*
 8. Recherche
 9. Favoris Room
 10. Polish release Play Store

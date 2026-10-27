@@ -32,4 +32,9 @@
     <color name="md_theme_on_error">#FFFFFF</color>
 
     <color name="placeholder_fill">#EAD5CB</color>
+
+    <!-- Nutri-score bar -->
+    <color name="nutri_score_low">#E53935</color>
+    <color name="nutri_score_mid">#FFC107</color>
+    <color name="nutri_score_high">#43A047</color>
 </resources>

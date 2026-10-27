@@ -125,13 +125,12 @@ URL fournie directement dans `strCategoryThumb`.
 
 TheMealDB **ne fournit pas** de calories ni de nutri-score.
 
-Choix de conception MyRecipes : **calcul local heuristique** à partir des données disponibles, par exemple :
+Choix de conception MyRecipes : **calcul local heuristique** (`NutriScoreCalculator`) :
 
-1. Compter les ingrédients non vides (`n`).
-2. Normaliser un score `0…100` (ex. plus d’ingrédients / plats plus « riches » → score plus bas, ou mapping fixe par catégorie).
-3. Afficher le résultat via une **Custom View** (barre ou cadran) : rouge (0 %) → vert (100 %).
-
-La formule exacte sera documentée / implémentée dans la feature `nutri-score`.
+1. Score de base `100`, pénalité de 3 pts par ingrédient au-delà de 4.
+2. Pénalité (−6) / bonus (+3) selon mots-clés d’ingrédients (beurre, crème… vs légumes, poisson…).
+3. Ajustement selon la catégorie (ex. Dessert −20, Vegan +18, Seafood +10).
+4. Résultat borné `0…100`, affiché via la **Custom View** `NutriScoreView` : rouge (0 %) → vert (100 %).
 
 ## Endpoints non utilisés (référence)
 
