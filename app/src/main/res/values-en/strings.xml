@@ -7,8 +7,12 @@
     <string name="nav_header_subtitle">Discover · Search · Favorites</string>
     <string name="nav_open_drawer">Open menu</string>
     <string name="nav_close_drawer">Close menu</string>
-    <string name="placeholder_search">Recipe search (coming soon)</string>
     <string name="placeholder_favorites">Favorite recipes (coming soon)</string>
+    <string name="search_hint">Search for a recipe…</string>
+    <string name="search_prompt">Type a recipe name to get started.</string>
+    <string name="search_query_too_short">Enter at least 2 characters.</string>
+    <string name="search_empty">No recipes found.</string>
+    <string name="error_loading_search">Unable to search.\nCheck your connection and try again.</string>
     <string name="category_thumb_description">Category thumbnail</string>
     <string name="recipe_thumb_description">Recipe thumbnail</string>
     <string name="recipe_photo_description">Recipe photo</string>

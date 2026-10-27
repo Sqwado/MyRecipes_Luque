@@ -47,4 +47,8 @@
     <dimen name="nutri_knob_radius">8dp</dimen>
     <dimen name="nutri_card_padding">12dp</dimen>
     <dimen name="nutri_card_corner">14dp</dimen>
+
+    <!-- Search -->
+    <dimen name="search_field_margin">16dp</dimen>
+    <dimen name="search_field_corner">28dp</dimen>
 </resources>

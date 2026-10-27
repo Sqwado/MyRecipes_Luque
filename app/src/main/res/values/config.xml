@@ -11,4 +11,8 @@
     <!-- Timeouts réseau (secondes) -->
     <integer name="http_connect_timeout_seconds">15</integer>
     <integer name="http_read_timeout_seconds">20</integer>
+
+    <!-- Recherche -->
+    <integer name="search_debounce_ms">400</integer>
+    <integer name="search_min_query_length">2</integer>
 </resources>
