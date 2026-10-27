@@ -26,8 +26,13 @@ class RecipesAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun onViewRecycled(holder: RecipeViewHolder) {
+        ThumbLoader.clear(holder.binding.imageThumb)
+        super.onViewRecycled(holder)
+    }
+
     inner class RecipeViewHolder(
-        private val binding: ItemRecipeBinding,
+        val binding: ItemRecipeBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(meal: MealSummary) {

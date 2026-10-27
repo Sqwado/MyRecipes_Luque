@@ -13,6 +13,7 @@
     <string name="search_query_too_short">Enter at least 2 characters.</string>
     <string name="search_empty">No recipes found.</string>
     <string name="error_loading_search">Unable to search.\nCheck your connection and try again.</string>
+    <string name="scroll_to_top">Back to top</string>
     <string name="category_thumb_description">Category thumbnail</string>
     <string name="recipe_thumb_description">Recipe thumbnail</string>
     <string name="recipe_photo_description">Recipe photo</string>

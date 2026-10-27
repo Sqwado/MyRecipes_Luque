@@ -26,8 +26,13 @@ class CategoriesAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun onViewRecycled(holder: CategoryViewHolder) {
+        ThumbLoader.clear(holder.binding.imageThumb)
+        super.onViewRecycled(holder)
+    }
+
     inner class CategoryViewHolder(
-        private val binding: ItemCategoryBinding,
+        val binding: ItemCategoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(category: Category) {

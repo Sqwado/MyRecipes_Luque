@@ -9,6 +9,10 @@
         <item name="colorOnSecondary">@color/md_theme_on_secondary</item>
         <item name="colorSecondaryContainer">@color/md_theme_secondary_container</item>
         <item name="colorOnSecondaryContainer">@color/md_theme_on_secondary_container</item>
+        <item name="colorTertiary">@color/md_theme_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_on_tertiary_container</item>
         <item name="android:colorBackground">@color/md_theme_background</item>
         <item name="colorOnBackground">@color/md_theme_on_background</item>
         <item name="colorSurface">@color/md_theme_surface</item>
@@ -19,8 +23,9 @@
         <item name="colorOutlineVariant">@color/md_theme_outline_variant</item>
         <item name="colorError">@color/md_theme_error</item>
         <item name="colorOnError">@color/md_theme_on_error</item>
-        <item name="android:statusBarColor">@color/md_theme_primary</item>
-        <item name="android:navigationBarColor">@color/md_theme_surface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.MyRecipes.Medium</item>
         <item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.MyRecipes.Large</item>
     </style>
@@ -50,5 +55,12 @@
         <item name="cardElevation">@dimen/card_elevation</item>
         <item name="strokeWidth">@dimen/card_stroke_width</item>
         <item name="shapeAppearance">@style/ShapeAppearance.MyRecipes.Medium</item>
+    </style>
+
+    <style name="Widget.MyRecipes.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="titleTextColor">?attr/colorOnSurface</item>
+        <item name="subtitleTextColor">?attr/colorOnSurfaceVariant</item>
+        <item name="navigationIconTint">?attr/colorOnSurface</item>
     </style>
 </resources>

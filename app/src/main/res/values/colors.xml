@@ -19,6 +19,10 @@
     <color name="md_theme_on_secondary">#3D2314</color>
     <color name="md_theme_secondary_container">#F5C9B0</color>
     <color name="md_theme_on_secondary_container">#3D2314</color>
+    <color name="md_theme_tertiary">#6B4335</color>
+    <color name="md_theme_on_tertiary">#F5EDE6</color>
+    <color name="md_theme_tertiary_container">#EAD5CB</color>
+    <color name="md_theme_on_tertiary_container">#3D2314</color>
     <color name="md_theme_background">#FFF8F5</color>
     <color name="md_theme_on_background">#3D2314</color>
     <color name="md_theme_surface">#FFF8F5</color>

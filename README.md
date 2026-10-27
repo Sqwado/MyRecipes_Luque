@@ -72,6 +72,7 @@ MyRecipes_Luque/
 6. Écran détail recette *(fait)*
 7. Custom View nutri-score *(fait)*
 8. Recherche *(fait)*
+8b. Réalignement standards M2Tmdb *(fait)*
 9. Favoris Room
 10. Polish release Play Store
 

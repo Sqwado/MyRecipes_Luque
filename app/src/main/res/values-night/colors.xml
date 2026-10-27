@@ -8,6 +8,10 @@
     <color name="md_theme_on_secondary">#3D2314</color>
     <color name="md_theme_secondary_container">#6B4335</color>
     <color name="md_theme_on_secondary_container">#F5EDE6</color>
+    <color name="md_theme_tertiary">#F5C9B0</color>
+    <color name="md_theme_on_tertiary">#3D2314</color>
+    <color name="md_theme_tertiary_container">#6B4335</color>
+    <color name="md_theme_on_tertiary_container">#F5EDE6</color>
     <color name="md_theme_background">#2A180E</color>
     <color name="md_theme_on_background">#F5EDE6</color>
     <color name="md_theme_surface">#3D2314</color>

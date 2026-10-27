@@ -13,6 +13,7 @@
     <string name="search_query_too_short">Saisis au moins 2 caractères.</string>
     <string name="search_empty">Aucune recette trouvée.</string>
     <string name="error_loading_search">Impossible de lancer la recherche.\nVérifie ta connexion puis réessaie.</string>
+    <string name="scroll_to_top">Retour en haut</string>
     <string name="category_thumb_description">Vignette de la catégorie</string>
     <string name="recipe_thumb_description">Vignette de la recette</string>
     <string name="recipe_photo_description">Photo de la recette</string>

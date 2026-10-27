@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.MyRecipes.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/item_card_margin_horizontal"
+    android:layout_marginVertical="@dimen/item_card_margin_vertical"
+    android:clickable="true"
+    android:focusable="true"
+    app:rippleColor="?attr/colorPrimaryContainer">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/item_card_padding">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_thumb"
+            android:layout_width="@dimen/item_thumb_size"
+            android:layout_height="@dimen/item_thumb_size"
+            android:background="@drawable/bg_placeholder_thumb"
+            android:contentDescription="@string/category_thumb_description"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.MyRecipes.Thumb"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_content_margin_start"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceTitleSmall"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/image_chevron"
+            app:layout_constraintStart_toEndOf="@id/image_thumb"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Seafood" />
+
+        <ImageView
+            android:id="@+id/image_chevron"
+            android:layout_width="@dimen/item_chevron_size"
+            android:layout_height="@dimen/item_chevron_size"
+            android:contentDescription="@null"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_chevron_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorOutline" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

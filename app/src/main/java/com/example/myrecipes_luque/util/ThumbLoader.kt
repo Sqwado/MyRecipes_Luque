@@ -36,4 +36,8 @@ object ThumbLoader {
             .transition(DrawableTransitionOptions.withCrossFade(200))
             .into(imageView)
     }
+
+    fun clear(imageView: ImageView) {
+        Glide.with(imageView).clear(imageView)
+    }
 }

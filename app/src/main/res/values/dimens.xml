@@ -15,7 +15,8 @@
     <!-- Screen / list -->
     <dimen name="screen_horizontal_margin">16dp</dimen>
     <dimen name="list_vertical_padding">8dp</dimen>
-    <dimen name="list_bottom_padding">24dp</dimen>
+    <dimen name="list_bottom_padding">88dp</dimen>
+    <dimen name="fab_margin">20dp</dimen>
 
     <!-- List item card -->
     <dimen name="item_card_margin_horizontal">16dp</dimen>
@@ -23,6 +24,7 @@
     <dimen name="item_card_padding">14dp</dimen>
     <dimen name="item_thumb_size">64dp</dimen>
     <dimen name="item_content_margin_start">14dp</dimen>
+    <dimen name="item_chevron_size">20dp</dimen>
     <dimen name="item_corner_radius">14dp</dimen>
     <dimen name="card_corner_radius">16dp</dimen>
     <dimen name="card_elevation">1dp</dimen>
@@ -39,7 +41,9 @@
     <dimen name="detail_content_padding_horizontal">20dp</dimen>
     <dimen name="detail_section_spacing">20dp</dimen>
     <dimen name="detail_chip_spacing">8dp</dimen>
-    <dimen name="detail_hero_corner_radius">0dp</dimen>
+    <dimen name="detail_hero_corner_radius">20dp</dimen>
+    <dimen name="detail_poster_width">180dp</dimen>
+    <dimen name="detail_poster_height">220dp</dimen>
     <dimen name="detail_ingredient_padding_vertical">8dp</dimen>
 
     <!-- Nutri-score -->
