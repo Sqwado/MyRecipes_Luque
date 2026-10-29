@@ -138,6 +138,7 @@ class RecipeDetailFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        ThumbLoader.clear(binding.imageHero)
         currentMeal = null
         super.onDestroyView()
         _binding = null

@@ -37,7 +37,7 @@
     </style>
 
     <style name="ShapeAppearance.MyRecipes.Large" parent="ShapeAppearance.Material3.Corner.Large">
-        <item name="cornerSize">24dp</item>
+        <item name="cornerSize">@dimen/shape_corner_large</item>
     </style>
 
     <style name="ShapeAppearance.MyRecipes.Thumb" parent="">

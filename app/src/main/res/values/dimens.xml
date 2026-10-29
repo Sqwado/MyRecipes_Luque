@@ -25,10 +25,13 @@
     <dimen name="item_thumb_size">64dp</dimen>
     <dimen name="item_content_margin_start">14dp</dimen>
     <dimen name="item_chevron_size">20dp</dimen>
+    <dimen name="item_icon_button_size">40dp</dimen>
+    <dimen name="item_thumb_stroke_width">1dp</dimen>
     <dimen name="item_corner_radius">14dp</dimen>
     <dimen name="card_corner_radius">16dp</dimen>
     <dimen name="card_elevation">1dp</dimen>
     <dimen name="card_stroke_width">0dp</dimen>
+    <dimen name="shape_corner_large">24dp</dimen>
 
     <!-- Nav header -->
     <dimen name="nav_header_height">176dp</dimen>
@@ -51,6 +54,7 @@
     <dimen name="nutri_knob_radius">8dp</dimen>
     <dimen name="nutri_card_padding">12dp</dimen>
     <dimen name="nutri_card_corner">14dp</dimen>
+    <dimen name="nutri_view_min_height">24dp</dimen>
 
     <!-- Search -->
     <dimen name="search_field_margin">16dp</dimen>

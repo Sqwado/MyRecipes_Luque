@@ -27,6 +27,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.MyRecipes.Thumb"
+            app:strokeColor="?attr/colorOutlineVariant"
+            app:strokeWidth="@dimen/item_thumb_stroke_width"
             tools:src="@mipmap/ic_launcher" />
 
         <TextView
