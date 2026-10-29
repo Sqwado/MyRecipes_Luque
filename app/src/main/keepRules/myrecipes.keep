@@ -1,0 +1,5 @@
+# Modèles Gson (désérialisation par réflexion)
+-keep class com.example.myrecipes_luque.data.model.** { *; }
+
+# Entity Room (sécurité si consumer rules incomplets)
+-keep class com.example.myrecipes_luque.data.local.FavoriteEntity { *; }

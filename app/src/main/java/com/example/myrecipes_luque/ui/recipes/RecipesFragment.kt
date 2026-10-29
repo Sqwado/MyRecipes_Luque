@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -44,6 +45,9 @@ class RecipesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val categoryName = requireArguments().getString(ARG_CATEGORY_NAME).orEmpty()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title =
+            getString(R.string.recipes_screen_title, categoryName)
+
         val spanCount = resources.getInteger(R.integer.list_span_count)
 
         binding.recyclerRecipes.layoutManager = GridLayoutManager(requireContext(), spanCount)

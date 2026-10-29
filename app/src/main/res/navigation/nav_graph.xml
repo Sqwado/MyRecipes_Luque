@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/recipesFragment"
         android:name="com.example.myrecipes_luque.ui.recipes.RecipesFragment"
-        android:label="{categoryName} Recipes"
+        android:label="{categoryName}"
         tools:layout="@layout/fragment_recipes">
         <argument
             android:name="categoryName"

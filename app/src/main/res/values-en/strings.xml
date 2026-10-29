@@ -21,7 +21,8 @@
     <string name="error_loading_recipes">Unable to load recipes.\nCheck your connection and try again.</string>
     <string name="error_loading_recipe_detail">Unable to load recipe details.\nCheck your connection and try again.</string>
     <string name="empty_recipes">No recipes found for this category.</string>
-    <string name="recipes_screen_title">%1$s Recipes</string>
+    <string name="recipes_screen_title">Recipes · %1$s</string>
+    <string name="api_attribution">Data: TheMealDB</string>
     <string name="section_instructions">Instructions</string>
     <string name="section_ingredients">Ingredients</string>
     <string name="section_nutri_score">Nutri-score</string>

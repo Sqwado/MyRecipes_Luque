@@ -32,4 +32,13 @@
         android:textAppearance="@style/TextAppearance.Material3.BodySmall"
         android:textColor="?attr/colorOnPrimary" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:alpha="0.85"
+        android:text="@string/api_attribution"
+        android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+        android:textColor="?attr/colorOnPrimary" />
+
 </LinearLayout>

@@ -24,7 +24,7 @@ Objectif : livrable de qualité **Play Store** (Kotlin, `minSdk 26`, layouts XML
 | Langage | Kotlin |
 | UI | Android Views (XML) |
 | Navigation | Drawer (Categories / Search / Favorites) |
-| Réseau | Retrofit / OkHttp |
+| Réseau | Retrofit / OkHttp (cache HTTP) |
 | Images | Glide |
 | Persistance | Jetpack Room (favoris) |
 | API | TheMealDB V1 (clé de test `1`) |
@@ -32,7 +32,7 @@ Objectif : livrable de qualité **Play Store** (Kotlin, `minSdk 26`, layouts XML
 ## Prérequis
 
 - Android Studio (version récente)
-- JDK 11+
+- JDK 17+
 - Émulateur ou appareil `minSdk 26`
 
 ## Lancer le projet
@@ -44,6 +44,20 @@ Objectif : livrable de qualité **Play Store** (Kotlin, `minSdk 26`, layouts XML
 ```text
 ./gradlew :app:assembleDebug
 ```
+
+## Build release (Play Store)
+
+```text
+./gradlew :app:assembleRelease
+./gradlew :app:bundleRelease
+```
+
+- APK : `app/build/outputs/apk/release/`
+- AAB : `app/build/outputs/bundle/release/`
+- R8 / shrinking activés (`optimization { enable = true }`)
+- Keep rules : `app/src/main/keepRules/`
+- `applicationId` : `com.ynov.myrecipes.luque` (hors `com.example.*`)
+- Pour une publication réelle : configurer une keystore de signing (le build local utilise la debug key par défaut) et une clé API TheMealDB supporter
 
 ## Structure du dépôt
 
@@ -74,7 +88,7 @@ MyRecipes_Luque/
 8. Recherche *(fait)*
 8b. Réalignement standards M2Tmdb *(fait)*
 9. Favoris Room *(fait)*
-10. Polish release Play Store
+10. Polish release Play Store *(fait)*
 
 ## Licence / attribution
 
