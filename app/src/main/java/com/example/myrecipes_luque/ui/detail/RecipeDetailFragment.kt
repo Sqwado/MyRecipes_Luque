@@ -9,12 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.myrecipes_luque.MyRecipesApp
 import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.data.model.MealDetail
 import com.example.myrecipes_luque.data.remote.MealDbClient
 import com.example.myrecipes_luque.databinding.FragmentRecipeDetailBinding
 import com.example.myrecipes_luque.databinding.ItemIngredientBinding
+import com.example.myrecipes_luque.databinding.ItemInstructionStepBinding
+import com.example.myrecipes_luque.ui.cook.CookModeFragment
+import com.example.myrecipes_luque.util.InstructionParser
 import com.example.myrecipes_luque.util.NutriScoreCalculator
 import com.example.myrecipes_luque.util.ThumbLoader
 import com.google.android.material.snackbar.Snackbar
@@ -31,6 +35,8 @@ class RecipeDetailFragment : Fragment() {
 
     private var currentMeal: MealDetail? = null
     private var isFavorite: Boolean = false
+    private var instructionSteps: List<String> = emptyList()
+    private var instructionsExpanded: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,12 +50,24 @@ class RecipeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mealId = requireArguments().getString(ARG_MEAL_ID).orEmpty()
+        instructionsExpanded = savedInstanceState?.getBoolean(STATE_INSTRUCTIONS_EXPANDED) == true
 
         binding.buttonFavorite.isEnabled = false
+        binding.buttonStartCooking.isEnabled = false
         binding.buttonFavorite.setOnClickListener { toggleFavorite() }
+        binding.buttonStartCooking.setOnClickListener { startCooking() }
+        binding.buttonToggleInstructions.setOnClickListener {
+            instructionsExpanded = !instructionsExpanded
+            renderInstructionSteps()
+        }
 
         observeFavoriteState(mealId)
         loadDetail(mealId)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(STATE_INSTRUCTIONS_EXPANDED, instructionsExpanded)
     }
 
     private fun observeFavoriteState(mealId: String) {
@@ -65,7 +83,7 @@ class RecipeDetailFragment : Fragment() {
 
     private fun updateFavoriteButton() {
         binding.buttonFavorite.setText(
-            if (isFavorite) R.string.action_remove_favorite else R.string.action_add_favorite,
+            if (isFavorite) R.string.action_unfavorite_short else R.string.action_favorite_short,
         )
         binding.buttonFavorite.isEnabled = currentMeal != null
     }
@@ -83,10 +101,35 @@ class RecipeDetailFragment : Fragment() {
         }
     }
 
+    private fun startCooking() {
+        val meal = currentMeal ?: return
+        val unavailable = getString(R.string.value_unavailable)
+        val ingredients = meal.ingredientLines().map { line ->
+            if (line.measure.isBlank()) {
+                line.name
+            } else {
+                getString(R.string.ingredient_line_format, line.name, line.measure)
+            }
+        }.ifEmpty { listOf(unavailable) }.toTypedArray()
+        val steps = instructionSteps
+            .ifEmpty { listOf(getString(R.string.value_unavailable)) }
+            .toTypedArray()
+        val args = Bundle().apply {
+            putString(CookModeFragment.ARG_MEAL_NAME, meal.name)
+            putStringArray(CookModeFragment.ARG_INGREDIENTS, ingredients)
+            putStringArray(CookModeFragment.ARG_STEPS, steps)
+        }
+        findNavController().navigate(
+            R.id.action_recipeDetailFragment_to_cookModeFragment,
+            args,
+        )
+    }
+
     private fun loadDetail(mealId: String) {
         binding.progress.isVisible = true
         binding.textError.isVisible = false
         binding.contentScroll.isVisible = false
+        binding.bottomBar.isVisible = false
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
@@ -98,7 +141,9 @@ class RecipeDetailFragment : Fragment() {
                     currentMeal = meal
                     bindMeal(meal)
                     updateFavoriteButton()
+                    binding.buttonStartCooking.isEnabled = true
                     binding.contentScroll.isVisible = true
+                    binding.bottomBar.isVisible = true
                 }
             } catch (_: Exception) {
                 binding.textError.setText(R.string.error_loading_recipe_detail)
@@ -120,8 +165,11 @@ class RecipeDetailFragment : Fragment() {
         binding.nutriScoreView.setScorePercent(nutriScore)
         binding.textNutriScore.text = getString(R.string.nutri_score_value, nutriScore)
 
-        binding.textInstructions.text =
-            meal.instructions?.trim()?.takeIf { it.isNotEmpty() } ?: unavailable
+        instructionSteps = InstructionParser.parse(meal.instructions)
+        binding.textStepsCount.text = getString(R.string.steps_count, instructionSteps.size)
+        binding.buttonToggleInstructions.isVisible =
+            instructionSteps.size > resources.getInteger(R.integer.instructions_collapsed_count)
+        renderInstructionSteps()
 
         binding.containerIngredients.removeAllViews()
         val inflater = layoutInflater
@@ -137,6 +185,40 @@ class RecipeDetailFragment : Fragment() {
         }
     }
 
+    private fun renderInstructionSteps() {
+        val collapsedCount = resources.getInteger(R.integer.instructions_collapsed_count)
+        val visibleSteps = when {
+            instructionSteps.isEmpty() -> listOf(getString(R.string.value_unavailable))
+            instructionsExpanded || instructionSteps.size <= collapsedCount -> instructionSteps
+            else -> instructionSteps.take(collapsedCount)
+        }
+
+        binding.containerInstructionSteps.removeAllViews()
+        val inflater = layoutInflater
+        visibleSteps.forEachIndexed { index, step ->
+            val itemBinding = ItemInstructionStepBinding.inflate(
+                inflater,
+                binding.containerInstructionSteps,
+                false,
+            )
+            itemBinding.textStepIndex.text = getString(R.string.step_index_format, index + 1)
+            itemBinding.textStepBody.text = step
+            binding.containerInstructionSteps.addView(itemBinding.root)
+        }
+
+        val canToggle = instructionSteps.size > collapsedCount
+        binding.buttonToggleInstructions.isVisible = canToggle
+        if (canToggle) {
+            if (instructionsExpanded) {
+                binding.buttonToggleInstructions.setText(R.string.action_collapse_steps)
+                binding.buttonToggleInstructions.setIconResource(R.drawable.ic_expand_less)
+            } else {
+                binding.buttonToggleInstructions.setText(R.string.action_expand_steps)
+                binding.buttonToggleInstructions.setIconResource(R.drawable.ic_expand_more)
+            }
+        }
+    }
+
     override fun onDestroyView() {
         ThumbLoader.clear(binding.imageHero)
         currentMeal = null
@@ -147,5 +229,6 @@ class RecipeDetailFragment : Fragment() {
     companion object {
         const val ARG_MEAL_ID = "mealId"
         const val ARG_MEAL_NAME = "mealName"
+        private const val STATE_INSTRUCTIONS_EXPANDED = "instructionsExpanded"
     }
 }

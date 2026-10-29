@@ -39,6 +39,25 @@
         <argument
             android:name="mealName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_cookModeFragment"
+            app:destination="@id/cookModeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cookModeFragment"
+        android:name="com.example.myrecipes_luque.ui.cook.CookModeFragment"
+        android:label="@string/cook_mode_title"
+        tools:layout="@layout/fragment_cook_mode">
+        <argument
+            android:name="mealName"
+            app:argType="string" />
+        <argument
+            android:name="ingredients"
+            app:argType="string[]" />
+        <argument
+            android:name="steps"
+            app:argType="string[]" />
     </fragment>
 
     <fragment

@@ -48,6 +48,11 @@
     <dimen name="detail_poster_width">180dp</dimen>
     <dimen name="detail_poster_height">220dp</dimen>
     <dimen name="detail_ingredient_padding_vertical">8dp</dimen>
+    <dimen name="detail_bottom_bar_padding">8dp</dimen>
+    <dimen name="detail_bottom_bar_elevation">6dp</dimen>
+    <dimen name="detail_bottom_button_min_height">40dp</dimen>
+    <dimen name="instruction_step_index_width">28dp</dimen>
+    <dimen name="cook_step_text_min_height">120dp</dimen>
 
     <!-- Nutri-score -->
     <dimen name="nutri_bar_height">12dp</dimen>
