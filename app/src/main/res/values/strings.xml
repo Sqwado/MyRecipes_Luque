@@ -7,7 +7,7 @@
     <string name="nav_header_subtitle">Découvrir · Chercher · Favoris</string>
     <string name="nav_open_drawer">Ouvrir le menu</string>
     <string name="nav_close_drawer">Fermer le menu</string>
-    <string name="placeholder_favorites">Recettes favorites (à venir)</string>
+    <string name="favorites_empty">Aucune recette en favoris.\nAjoute-en depuis le détail d’une recette.</string>
     <string name="search_hint">Rechercher une recette…</string>
     <string name="search_prompt">Saisis le nom d’une recette pour commencer.</string>
     <string name="search_query_too_short">Saisis au moins 2 caractères.</string>
@@ -29,6 +29,9 @@
     <string name="nutri_score_a11y">Nutri-score estimé : %1$d pour cent</string>
     <string name="nutri_score_hint">Estimation locale (TheMealDB ne fournit pas de calories)</string>
     <string name="action_add_favorite">Ajouter aux favoris</string>
-    <string name="favorite_coming_soon">Persistance des favoris à venir</string>
+    <string name="action_remove_favorite">Retirer des favoris</string>
+    <string name="action_undo">Annuler</string>
+    <string name="favorite_added">Recette ajoutée aux favoris</string>
+    <string name="favorite_removed">Recette retirée des favoris</string>
     <string name="value_unavailable">—</string>
 </resources>

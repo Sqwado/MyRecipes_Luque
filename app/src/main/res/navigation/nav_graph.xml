@@ -55,6 +55,10 @@
         android:id="@+id/favoritesFragment"
         android:name="com.example.myrecipes_luque.ui.favorites.FavoritesFragment"
         android:label="@string/nav_favorites"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
 
 </navigation>

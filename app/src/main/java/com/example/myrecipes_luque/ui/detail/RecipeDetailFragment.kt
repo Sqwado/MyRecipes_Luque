@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.myrecipes_luque.MyRecipesApp
 import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.data.model.MealDetail
 import com.example.myrecipes_luque.data.remote.MealDbClient
@@ -22,6 +25,13 @@ class RecipeDetailFragment : Fragment() {
     private var _binding: FragmentRecipeDetailBinding? = null
     private val binding get() = _binding!!
 
+    private val favoritesRepository by lazy {
+        (requireActivity().application as MyRecipesApp).favoritesRepository
+    }
+
+    private var currentMeal: MealDetail? = null
+    private var isFavorite: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,10 +44,43 @@ class RecipeDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mealId = requireArguments().getString(ARG_MEAL_ID).orEmpty()
-        binding.buttonFavorite.setOnClickListener {
-            Snackbar.make(binding.root, R.string.favorite_coming_soon, Snackbar.LENGTH_SHORT).show()
-        }
+
+        binding.buttonFavorite.isEnabled = false
+        binding.buttonFavorite.setOnClickListener { toggleFavorite() }
+
+        observeFavoriteState(mealId)
         loadDetail(mealId)
+    }
+
+    private fun observeFavoriteState(mealId: String) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                favoritesRepository.observeIsFavorite(mealId).collect { favorite ->
+                    isFavorite = favorite
+                    updateFavoriteButton()
+                }
+            }
+        }
+    }
+
+    private fun updateFavoriteButton() {
+        binding.buttonFavorite.setText(
+            if (isFavorite) R.string.action_remove_favorite else R.string.action_add_favorite,
+        )
+        binding.buttonFavorite.isEnabled = currentMeal != null
+    }
+
+    private fun toggleFavorite() {
+        val meal = currentMeal ?: return
+        viewLifecycleOwner.lifecycleScope.launch {
+            if (isFavorite) {
+                favoritesRepository.remove(meal.id)
+                Snackbar.make(binding.root, R.string.favorite_removed, Snackbar.LENGTH_SHORT).show()
+            } else {
+                favoritesRepository.add(meal)
+                Snackbar.make(binding.root, R.string.favorite_added, Snackbar.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun loadDetail(mealId: String) {
@@ -52,7 +95,9 @@ class RecipeDetailFragment : Fragment() {
                     binding.textError.setText(R.string.error_loading_recipe_detail)
                     binding.textError.isVisible = true
                 } else {
+                    currentMeal = meal
                     bindMeal(meal)
+                    updateFavoriteButton()
                     binding.contentScroll.isVisible = true
                 }
             } catch (_: Exception) {
@@ -93,6 +138,7 @@ class RecipeDetailFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        currentMeal = null
         super.onDestroyView()
         _binding = null
     }

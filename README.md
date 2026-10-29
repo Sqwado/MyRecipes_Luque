@@ -24,9 +24,9 @@ Objectif : livrable de qualité **Play Store** (Kotlin, `minSdk 26`, layouts XML
 | Langage | Kotlin |
 | UI | Android Views (XML) |
 | Navigation | Drawer (Categories / Search / Favorites) |
-| Réseau | Retrofit / OkHttp *(à venir)* |
-| Images | Glide ou Coil *(à venir)* |
-| Persistance | Jetpack Room *(favoris)* |
+| Réseau | Retrofit / OkHttp |
+| Images | Glide |
+| Persistance | Jetpack Room (favoris) |
 | API | TheMealDB V1 (clé de test `1`) |
 
 ## Prérequis
@@ -73,7 +73,7 @@ MyRecipes_Luque/
 7. Custom View nutri-score *(fait)*
 8. Recherche *(fait)*
 8b. Réalignement standards M2Tmdb *(fait)*
-9. Favoris Room
+9. Favoris Room *(fait)*
 10. Polish release Play Store
 
 ## Licence / attribution
