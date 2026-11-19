@@ -23,7 +23,8 @@ class CategoriesFragment : Fragment() {
 
     private val adapter = CategoriesAdapter { category ->
         val args = Bundle().apply {
-            putString(RecipesFragment.ARG_CATEGORY_NAME, category.name)
+            putString(RecipesFragment.ARG_FILTER_NAME, category.name)
+            putString(RecipesFragment.ARG_FILTER_TYPE, RecipesFragment.FILTER_TYPE_CATEGORY)
         }
         findNavController().navigate(
             R.id.action_categoriesFragment_to_recipesFragment,
@@ -49,12 +50,13 @@ class CategoriesFragment : Fragment() {
             fab = binding.fabScrollTop,
             threshold = resources.getInteger(R.integer.scroll_top_threshold),
         )
+        binding.buttonRetry.setOnClickListener { loadCategories() }
         loadCategories()
     }
 
     private fun loadCategories() {
         binding.progress.isVisible = true
-        binding.textError.isVisible = false
+        binding.stateContainer.isVisible = false
         binding.recyclerCategories.isVisible = false
         binding.fabScrollTop.isVisible = false
 
@@ -65,8 +67,9 @@ class CategoriesFragment : Fragment() {
                 adapter.submitList(categories)
                 binding.recyclerCategories.isVisible = true
             } catch (_: Exception) {
-                binding.textError.setText(R.string.error_loading_categories)
-                binding.textError.isVisible = true
+                binding.textState.setText(R.string.error_loading_categories)
+                binding.buttonRetry.isVisible = true
+                binding.stateContainer.isVisible = true
             } finally {
                 binding.progress.isVisible = false
             }

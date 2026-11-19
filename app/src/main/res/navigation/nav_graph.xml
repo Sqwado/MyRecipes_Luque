@@ -16,13 +16,27 @@
     </fragment>
 
     <fragment
+        android:id="@+id/areasFragment"
+        android:name="com.example.myrecipes_luque.ui.areas.AreasFragment"
+        android:label="@string/nav_cuisines"
+        tools:layout="@layout/fragment_areas">
+        <action
+            android:id="@+id/action_areasFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/recipesFragment"
         android:name="com.example.myrecipes_luque.ui.recipes.RecipesFragment"
-        android:label="{categoryName}"
+        android:label="{filterName}"
         tools:layout="@layout/fragment_recipes">
         <argument
-            android:name="categoryName"
+            android:name="filterName"
             app:argType="string" />
+        <argument
+            android:name="filterType"
+            app:argType="string"
+            android:defaultValue="category" />
         <action
             android:id="@+id/action_recipesFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
@@ -54,6 +68,9 @@
             app:argType="string" />
         <argument
             android:name="ingredients"
+            app:argType="string[]" />
+        <argument
+            android:name="ingredientNames"
             app:argType="string[]" />
         <argument
             android:name="steps"

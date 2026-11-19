@@ -2,6 +2,8 @@
 <resources>
     <!-- TheMealDB API -->
     <string name="mealdb_base_url" translatable="false">https://www.themealdb.com/api/json/v1/1/</string>
+    <string name="mealdb_ingredient_image_base_url" translatable="false">https://www.themealdb.com/images/ingredients/</string>
+    <string name="mealdb_meal_page_base_url" translatable="false">https://www.themealdb.com/meal/</string>
 
     <!-- Cache HTTP OkHttp -->
     <integer name="http_cache_size_mb">10</integer>

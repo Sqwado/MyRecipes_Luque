@@ -187,26 +187,48 @@
     }
 
     .row {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.65rem 0.9rem;
-      border-bottom: 1px solid var(--line);
+      position: relative;
+      display: block;
+      margin: 0.55rem 0.75rem;
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 118px;
       cursor: pointer;
-      transition: background 0.15s;
+      box-shadow: 0 2px 10px rgba(61, 35, 20, 0.1);
+      border: 1px solid var(--line);
+      background: #fff;
     }
 
     .row:hover { background: rgba(232, 145, 122, 0.12); }
 
     .thumb {
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      flex-shrink: 0;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
       background-size: cover;
       background-position: center;
-      box-shadow: 0 2px 8px rgba(61, 35, 20, 0.12);
     }
+    .row::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 58%;
+      background: linear-gradient(transparent, rgba(0,0,0,0.62));
+      pointer-events: none;
+    }
+    .row-text {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      padding: 0.75rem 0.85rem;
+      color: var(--cream);
+    }
+    .row-text strong { color: var(--cream); }
+    .row-text span { color: var(--peach); }
 
     .row-text strong {
       display: block;
@@ -475,8 +497,10 @@
               </div>
               <ul class="drawer-nav">
                 <li class="active">Categories</li>
+                <li>Cuisines</li>
                 <li>Search</li>
                 <li>Favorites</li>
+                <li>Surprise</li>
               </ul>
             </aside>
             <div class="drawer-dim" aria-hidden="true"></div>

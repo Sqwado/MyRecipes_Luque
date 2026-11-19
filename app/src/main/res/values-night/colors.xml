@@ -23,6 +23,10 @@
     <color name="md_theme_outline_variant">#6B4335</color>
     <color name="md_theme_error">#FFB4AB</color>
     <color name="md_theme_on_error">#690005</color>
+    <color name="md_theme_error_container">#93000A</color>
+    <color name="md_theme_on_error_container">#FFDAD6</color>
+    <color name="md_theme_surface_container">#4A2E20</color>
+    <color name="md_theme_scrim_overlay">#99000000</color>
 
     <color name="placeholder_fill">#6B4335</color>
 </resources>

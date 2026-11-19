@@ -21,48 +21,16 @@ Pour une publication Play Store publique, TheMealDB exige une clé supporter. En
 GET https://www.themealdb.com/api/json/v1/1/categories.php
 ```
 
-Réponse (extrait) :
-
-```json
-{
-  "categories": [
-    {
-      "idCategory": "1",
-      "strCategory": "Beef",
-      "strCategoryThumb": "https://www.themealdb.com/images/category/beef.png",
-      "strCategoryDescription": "..."
-    }
-  ]
-}
-```
-
 | Champ | Usage app |
 |-------|-----------|
 | `idCategory` | Identifiant interne |
 | `strCategory` | Nom affiché + paramètre pour le filtre recettes |
 | `strCategoryThumb` | Vignette de la ligne |
-| `strCategoryDescription` | Non requis par le cahier des charges |
 
 ### 2. Recettes par catégorie — besoin B4
 
 ```
 GET https://www.themealdb.com/api/json/v1/1/filter.php?c={CategoryName}
-```
-
-Exemple : `filter.php?c=Seafood`
-
-Réponse (extrait) :
-
-```json
-{
-  "meals": [
-    {
-      "strMeal": "Baked salmon with fennel & tomatoes",
-      "strMealThumb": "https://www.themealdb.com/images/media/meals/1548772327.jpg",
-      "idMeal": "52959"
-    }
-  ]
-}
 ```
 
 | Champ | Usage app |
@@ -77,22 +45,15 @@ Réponse (extrait) :
 GET https://www.themealdb.com/api/json/v1/1/lookup.php?i={idMeal}
 ```
 
-Exemple : `lookup.php?i=52772`
-
-Champs utiles :
-
 | Champ | Usage app |
 |-------|-----------|
 | `idMeal` | Identifiant |
 | `strMeal` | Titre de l’écran |
-| `strCategory` | Catégorie |
-| `strArea` | Pays / zone d’origine |
-| `strMealThumb` | Photo du résultat |
-| `strInstructions` | Instructions détaillées |
-| `strIngredient1` … `strIngredient20` | Ingrédients (ignorer vides / null) |
-| `strMeasure1` … `strMeasure20` | Quantités associées |
-| `strYoutube` | Non requis par le cahier des charges |
-| `strTags` | Non requis |
+| `strCategory` / `strArea` | Chips meta |
+| `strMealThumb` | Photo hero |
+| `strInstructions` | Étapes |
+| `strIngredientN` / `strMeasureN` | Ingrédients + quantités |
+| `strYoutube` | Bouton vidéo (si non vide) |
 
 ### 4. Recherche par nom — besoin B11
 
@@ -100,47 +61,46 @@ Champs utiles :
 GET https://www.themealdb.com/api/json/v1/1/search.php?s={name}
 ```
 
-Exemple : `search.php?s=Arrabiata`
+### 5. Recette aléatoire — Surprise (hors CDC)
 
-- Si des résultats existent : `meals` est un tableau d’objets détail (même forme que `lookup`).
-- Si aucun résultat : `"meals": null`.
+```
+GET https://www.themealdb.com/api/json/v1/1/random.php
+```
+
+Réponse : même forme que `lookup.php` (un meal). Ouverture directe du détail.
+
+### 6. Liste des cuisines / zones — hors CDC
+
+```
+GET https://www.themealdb.com/api/json/v1/1/list.php?a=list
+```
+
+Puis recettes :
+
+```
+GET https://www.themealdb.com/api/json/v1/1/filter.php?a={AreaName}
+```
 
 ## Images
 
-### Catégories
+### Catégories / recettes
 
-URL fournie directement dans `strCategoryThumb`.
+URLs fournies par l’API (`strCategoryThumb`, `strMealThumb`). Les cards image-forward et le hero chargent la **photo pleine** (pas `/preview`, trop pixelisée à cette taille).
 
-### Recettes
+### Ingrédients
 
-- URL pleine : `strMealThumb`
-- Variantes possibles (doc TheMealDB) : suffixe `/preview`, ou tailles `/small`, `/medium`, `/large` selon les URLs d’images média.
+```
+https://www.themealdb.com/images/ingredients/{Name}.png
+https://www.themealdb.com/images/ingredients/{Name}-Small.png
+```
 
-### Ingrédients (optionnel, hors CDC)
-
-`https://www.themealdb.com/images/ingredients/{Name}.png`  
-(espaces remplacés par `_`)
+Espaces remplacés par `_`. Utilisé sur le détail et le mode cuisine.
 
 ## Nutri-score (besoin B7) — hors API
 
 TheMealDB **ne fournit pas** de calories ni de nutri-score.
 
-Choix de conception MyRecipes : **calcul local heuristique** (`NutriScoreCalculator`) :
-
-1. Score de base `100`, pénalité de 3 pts par ingrédient au-delà de 4.
-2. Pénalité (−6) / bonus (+3) selon mots-clés d’ingrédients (beurre, crème… vs légumes, poisson…).
-3. Ajustement selon la catégorie (ex. Dessert −20, Vegan +18, Seafood +10).
-4. Résultat borné `0…100`, affiché via la **Custom View** `NutriScoreView` : rouge (0 %) → vert (100 %).
-
-## Endpoints non utilisés (référence)
-
-| Endpoint | Raison |
-|----------|--------|
-| `search.php?f=` | Liste par lettre — non demandée |
-| `random.php` | Non demandée |
-| `list.php?c/a/i=list` | Listes brutes — `categories.php` suffit |
-| `filter.php?i=` / `filter.php?a=` | Filtre ingrédient / zone — non demandés |
-| API V2 premium | Hors périmètre (clé `1`) |
+Choix de conception : calcul local heuristique (`NutriScoreCalculator`) + Custom View `NutriScoreView` (rouge → vert).
 
 ## Mapping besoins ↔ API
 
@@ -150,11 +110,14 @@ Choix de conception MyRecipes : **calcul local heuristique** (`NutriScoreCalcula
 | B4–B5 | `{Category} Recipes` | `filter.php?c=` |
 | B6 | Détail recette | `lookup.php?i=` |
 | B7 | Nutri-score | Calcul local |
-| B8–B10 | Favorites | Persistance Room (pas d’API) |
+| B8–B10 | Favorites | Room |
 | B11 | Search | `search.php?s=` |
 | B12 | Menu hamburger | Navigation locale |
+| + | Surprise | `random.php` |
+| + | Cuisines | `list.php?a=list` + `filter.php?a=` |
+| + | YouTube | champ `strYoutube` |
+| + | Images ingrédients | CDN ingredients |
 
 ## Attribution
 
-Données et images fournies par [TheMealDB](https://www.themealdb.com/).  
-API et site restent gratuits au point d’accès ; respecter leurs conditions pour une éventuelle publication store.
+Données et images fournies par [TheMealDB](https://www.themealdb.com/).

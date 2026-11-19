@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.checkbox.MaterialCheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/check_ingredient"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingVertical="@dimen/spacing_sm"
-    android:textAppearance="?attr/textAppearanceBodyLarge"
-    android:textColor="?attr/colorOnSurface"
-    tools:text="Chicken — 1 kg" />
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="@dimen/spacing_sm">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_ingredient"
+        android:layout_width="@dimen/ingredient_thumb_size"
+        android:layout_height="@dimen/ingredient_thumb_size"
+        android:background="@drawable/bg_placeholder_thumb"
+        android:contentDescription="@string/ingredient_thumb_description"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.MyRecipes.Thumb"
+        tools:src="@mipmap/ic_launcher" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/check_ingredient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_lg"
+        android:layout_weight="1"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textColor="?attr/colorOnSurface"
+        tools:text="Chicken — 1 kg" />
+
+</LinearLayout>

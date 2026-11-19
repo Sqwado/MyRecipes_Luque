@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Spacing -->
+    <!-- Spacing (8dp grid) -->
     <dimen name="spacing_xxs">2dp</dimen>
     <dimen name="spacing_xs">4dp</dimen>
-    <dimen name="spacing_sm">6dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
     <dimen name="spacing_md">8dp</dimen>
     <dimen name="spacing_lg">12dp</dimen>
-    <dimen name="spacing_xl">14dp</dimen>
+    <dimen name="spacing_xl">16dp</dimen>
     <dimen name="spacing_xxl">16dp</dimen>
-    <dimen name="spacing_xxxl">20dp</dimen>
+    <dimen name="spacing_xxxl">24dp</dimen>
     <dimen name="spacing_huge">24dp</dimen>
     <dimen name="spacing_error">32dp</dimen>
 
     <!-- Screen / list -->
     <dimen name="screen_horizontal_margin">16dp</dimen>
+    <dimen name="list_horizontal_padding">8dp</dimen>
     <dimen name="list_vertical_padding">8dp</dimen>
     <dimen name="list_bottom_padding">88dp</dimen>
     <dimen name="fab_margin">20dp</dimen>
 
-    <!-- List item card -->
-    <dimen name="item_card_margin_horizontal">16dp</dimen>
-    <dimen name="item_card_margin_vertical">7dp</dimen>
-    <dimen name="item_card_padding">14dp</dimen>
-    <dimen name="item_thumb_size">64dp</dimen>
+    <!-- List item card (image-forward) -->
+    <dimen name="item_card_margin_horizontal">8dp</dimen>
+    <dimen name="item_card_margin_vertical">8dp</dimen>
+    <dimen name="item_card_padding">16dp</dimen>
+    <dimen name="item_image_height">168dp</dimen>
+    <dimen name="item_image_scrim_height">96dp</dimen>
+    <dimen name="item_thumb_size">168dp</dimen>
     <dimen name="item_content_margin_start">14dp</dimen>
     <dimen name="item_chevron_size">20dp</dimen>
     <dimen name="item_icon_button_size">40dp</dimen>
-    <dimen name="item_thumb_stroke_width">1dp</dimen>
-    <dimen name="item_corner_radius">14dp</dimen>
-    <dimen name="card_corner_radius">16dp</dimen>
-    <dimen name="card_elevation">1dp</dimen>
-    <dimen name="card_stroke_width">0dp</dimen>
-    <dimen name="shape_corner_large">24dp</dimen>
+    <dimen name="item_thumb_stroke_width">0dp</dimen>
+    <dimen name="item_corner_radius">20dp</dimen>
+    <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="card_elevation">0dp</dimen>
+    <dimen name="card_stroke_width">1dp</dimen>
+    <dimen name="shape_corner_large">28dp</dimen>
+    <dimen name="area_avatar_size">48dp</dimen>
+    <dimen name="ingredient_thumb_size">40dp</dimen>
 
     <!-- Nav header -->
     <dimen name="nav_header_height">176dp</dimen>
@@ -40,25 +45,29 @@
     <dimen name="nav_header_logo_margin_bottom">12dp</dimen>
 
     <!-- Recipe detail -->
-    <dimen name="detail_hero_height">220dp</dimen>
+    <dimen name="detail_hero_height">280dp</dimen>
     <dimen name="detail_content_padding_horizontal">20dp</dimen>
-    <dimen name="detail_section_spacing">20dp</dimen>
+    <dimen name="detail_section_spacing">24dp</dimen>
     <dimen name="detail_chip_spacing">8dp</dimen>
-    <dimen name="detail_hero_corner_radius">20dp</dimen>
+    <dimen name="detail_hero_corner_radius">0dp</dimen>
     <dimen name="detail_poster_width">180dp</dimen>
     <dimen name="detail_poster_height">220dp</dimen>
-    <dimen name="detail_ingredient_padding_vertical">8dp</dimen>
-    <dimen name="detail_bottom_bar_padding">8dp</dimen>
-    <dimen name="detail_bottom_bar_elevation">6dp</dimen>
-    <dimen name="detail_bottom_button_min_height">40dp</dimen>
+    <dimen name="detail_ingredient_padding_vertical">10dp</dimen>
+    <dimen name="detail_bottom_bar_padding">12dp</dimen>
+    <dimen name="detail_bottom_bar_elevation">8dp</dimen>
+    <dimen name="detail_bottom_button_min_height">44dp</dimen>
     <dimen name="instruction_step_index_width">28dp</dimen>
-    <dimen name="cook_step_text_min_height">120dp</dimen>
+    <dimen name="instruction_step_badge_size">36dp</dimen>
+    <dimen name="cook_step_text_min_height">140dp</dimen>
+    <dimen name="cook_step_badge_size">56dp</dimen>
+    <dimen name="cook_step_card_min_height">200dp</dimen>
+    <dimen name="cook_progress_height">8dp</dimen>
 
     <!-- Nutri-score -->
     <dimen name="nutri_bar_height">12dp</dimen>
     <dimen name="nutri_knob_radius">8dp</dimen>
-    <dimen name="nutri_card_padding">12dp</dimen>
-    <dimen name="nutri_card_corner">14dp</dimen>
+    <dimen name="nutri_card_padding">16dp</dimen>
+    <dimen name="nutri_card_corner">16dp</dimen>
     <dimen name="nutri_view_min_height">24dp</dimen>
 
     <!-- Search -->

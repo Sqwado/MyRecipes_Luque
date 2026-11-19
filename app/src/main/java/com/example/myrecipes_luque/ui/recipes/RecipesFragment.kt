@@ -44,41 +44,55 @@ class RecipesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val categoryName = requireArguments().getString(ARG_CATEGORY_NAME).orEmpty()
+        val filterName = requireArguments().getString(ARG_FILTER_NAME).orEmpty()
+        val filterType = requireArguments().getString(ARG_FILTER_TYPE) ?: FILTER_TYPE_CATEGORY
+
         (requireActivity() as AppCompatActivity).supportActionBar?.title =
-            getString(R.string.recipes_screen_title, categoryName)
+            getString(R.string.recipes_screen_title, filterName)
 
         val spanCount = resources.getInteger(R.integer.list_span_count)
-
         binding.recyclerRecipes.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerRecipes.adapter = adapter
         binding.recyclerRecipes.setupScrollToTop(
             fab = binding.fabScrollTop,
             threshold = resources.getInteger(R.integer.scroll_top_threshold),
         )
-        loadRecipes(categoryName)
+        binding.buttonRetry.setOnClickListener { loadRecipes(filterName, filterType) }
+        loadRecipes(filterName, filterType)
     }
 
-    private fun loadRecipes(categoryName: String) {
+    private fun loadRecipes(filterName: String, filterType: String) {
         binding.progress.isVisible = true
-        binding.textError.isVisible = false
+        binding.stateContainer.isVisible = false
         binding.recyclerRecipes.isVisible = false
         binding.fabScrollTop.isVisible = false
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val response = MealDbClient.api.getMealsByCategory(categoryName)
+                val response = if (filterType == FILTER_TYPE_AREA) {
+                    MealDbClient.api.getMealsByArea(filterName)
+                } else {
+                    MealDbClient.api.getMealsByCategory(filterName)
+                }
                 val meals = response.meals.orEmpty()
                 if (meals.isEmpty()) {
-                    binding.textError.setText(R.string.empty_recipes)
-                    binding.textError.isVisible = true
+                    binding.textState.setText(
+                        if (filterType == FILTER_TYPE_AREA) {
+                            R.string.empty_recipes_area
+                        } else {
+                            R.string.empty_recipes
+                        },
+                    )
+                    binding.buttonRetry.isVisible = false
+                    binding.stateContainer.isVisible = true
                 } else {
                     adapter.submitList(meals)
                     binding.recyclerRecipes.isVisible = true
                 }
             } catch (_: Exception) {
-                binding.textError.setText(R.string.error_loading_recipes)
-                binding.textError.isVisible = true
+                binding.textState.setText(R.string.error_loading_recipes)
+                binding.buttonRetry.isVisible = true
+                binding.stateContainer.isVisible = true
             } finally {
                 binding.progress.isVisible = false
             }
@@ -91,6 +105,12 @@ class RecipesFragment : Fragment() {
     }
 
     companion object {
-        const val ARG_CATEGORY_NAME = "categoryName"
+        const val ARG_FILTER_NAME = "filterName"
+        const val ARG_FILTER_TYPE = "filterType"
+        const val FILTER_TYPE_CATEGORY = "category"
+        const val FILTER_TYPE_AREA = "area"
+
+        /** @deprecated kept for older call sites */
+        const val ARG_CATEGORY_NAME = ARG_FILTER_NAME
     }
 }

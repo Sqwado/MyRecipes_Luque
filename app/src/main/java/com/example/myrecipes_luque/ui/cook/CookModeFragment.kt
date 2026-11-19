@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.databinding.FragmentCookModeBinding
 import com.example.myrecipes_luque.databinding.ItemCookIngredientBinding
+import com.example.myrecipes_luque.util.ThumbLoader
 
 class CookModeFragment : Fragment() {
 
@@ -18,6 +19,7 @@ class CookModeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var ingredients: List<String> = emptyList()
+    private var ingredientNames: List<String> = emptyList()
     private var steps: List<String> = emptyList()
     private var pageIndex: Int = 0
 
@@ -37,6 +39,9 @@ class CookModeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         ingredients = requireArguments().getStringArray(ARG_INGREDIENTS)?.toList().orEmpty()
+        ingredientNames = requireArguments().getStringArray(ARG_INGREDIENT_NAMES)?.toList()
+            .orEmpty()
+            .ifEmpty { ingredients }
         steps = requireArguments().getStringArray(ARG_STEPS)?.toList().orEmpty()
         pageIndex = savedInstanceState?.getInt(STATE_PAGE_INDEX) ?: 0
 
@@ -71,13 +76,15 @@ class CookModeFragment : Fragment() {
     private fun populateIngredients() {
         binding.containerCookIngredients.removeAllViews()
         val inflater = layoutInflater
-        ingredients.forEach { line ->
+        ingredients.forEachIndexed { index, line ->
             val itemBinding = ItemCookIngredientBinding.inflate(
                 inflater,
                 binding.containerCookIngredients,
                 false,
             )
             itemBinding.checkIngredient.text = line
+            val name = ingredientNames.getOrNull(index) ?: line
+            ThumbLoader.loadIngredient(itemBinding.imageIngredient, name)
             binding.containerCookIngredients.addView(itemBinding.root)
         }
     }
@@ -97,10 +104,16 @@ class CookModeFragment : Fragment() {
             safeIndex + 1,
             pageCount,
         )
+        binding.textCookProgressLabel.text = getString(
+            R.string.cook_progress_label,
+            safeIndex + 1,
+            pageCount,
+        )
 
         val isPrep = safeIndex == 0
         binding.containerCookIngredients.isVisible = isPrep
-        binding.textCookStep.isVisible = !isPrep
+        binding.cardCookStep.isVisible = !isPrep
+        binding.textCookBadge.isVisible = !isPrep
 
         if (isPrep) {
             binding.textCookPhase.setText(R.string.cook_prep_title)
@@ -108,6 +121,7 @@ class CookModeFragment : Fragment() {
             binding.textCookSubtitle.isVisible = true
         } else {
             val stepNumber = safeIndex
+            binding.textCookBadge.text = getString(R.string.step_index_format, stepNumber)
             binding.textCookPhase.text = getString(
                 R.string.cook_step_title,
                 stepNumber,
@@ -139,6 +153,7 @@ class CookModeFragment : Fragment() {
     companion object {
         const val ARG_MEAL_NAME = "mealName"
         const val ARG_INGREDIENTS = "ingredients"
+        const val ARG_INGREDIENT_NAMES = "ingredientNames"
         const val ARG_STEPS = "steps"
         private const val STATE_PAGE_INDEX = "pageIndex"
     }

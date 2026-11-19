@@ -9,57 +9,40 @@
     android:layout_marginVertical="@dimen/item_card_margin_vertical"
     android:clickable="true"
     android:focusable="true"
+    app:cardPreventCornerOverlap="true"
     app:rippleColor="?attr/colorPrimaryContainer">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/item_card_padding">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_thumb"
-            android:layout_width="@dimen/item_thumb_size"
-            android:layout_height="@dimen/item_thumb_size"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_image_height"
             android:background="@drawable/bg_placeholder_thumb"
             android:contentDescription="@string/recipe_thumb_description"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.MyRecipes.Thumb"
-            app:strokeColor="?attr/colorOutlineVariant"
-            app:strokeWidth="@dimen/item_thumb_stroke_width"
             tools:src="@mipmap/ic_launcher" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_image_scrim_height"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_image_scrim" />
 
         <TextView
             android:id="@+id/text_name"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/item_content_margin_start"
-            android:layout_marginEnd="@dimen/spacing_sm"
+            android:layout_gravity="bottom"
             android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
             android:maxLines="2"
+            android:paddingHorizontal="@dimen/spacing_xxl"
+            android:paddingBottom="@dimen/spacing_xxl"
             android:textAppearance="?attr/textAppearanceTitleMedium"
-            android:textColor="?attr/colorOnSurface"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/image_chevron"
-            app:layout_constraintStart_toEndOf="@id/image_thumb"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Baked salmon" />
-
-        <ImageView
-            android:id="@+id/image_chevron"
-            android:layout_width="@dimen/item_chevron_size"
-            android:layout_height="@dimen/item_chevron_size"
-            android:contentDescription="@null"
-            android:importantForAccessibility="no"
-            android:src="@drawable/ic_chevron_right"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorOutline" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColor="@color/brand_cream"
+            tools:text="Baked salmon with fennel" />
+    </FrameLayout>
 
 </com.google.android.material.card.MaterialCardView>

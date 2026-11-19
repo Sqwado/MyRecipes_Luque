@@ -20,6 +20,8 @@ data class MealDetail(
     val instructions: String?,
     @SerializedName("strMealThumb")
     val thumbUrl: String?,
+    @SerializedName("strYoutube")
+    val youtubeUrl: String? = null,
     @SerializedName("strIngredient1") val ingredient1: String? = null,
     @SerializedName("strIngredient2") val ingredient2: String? = null,
     @SerializedName("strIngredient3") val ingredient3: String? = null,

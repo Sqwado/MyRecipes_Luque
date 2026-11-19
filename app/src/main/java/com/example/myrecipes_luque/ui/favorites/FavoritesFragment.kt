@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.myrecipes_luque.MyRecipesApp
 import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.data.local.FavoriteEntity
 import com.example.myrecipes_luque.databinding.FragmentFavoritesBinding
@@ -25,9 +25,7 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!
 
-    private val favoritesRepository by lazy {
-        (requireActivity().application as MyRecipesApp).favoritesRepository
-    }
+    private val viewModel: FavoritesViewModel by activityViewModels()
 
     private val adapter = FavoritesAdapter(
         onFavoriteClick = { favorite -> openDetail(favorite) },
@@ -58,7 +56,7 @@ class FavoritesFragment : Fragment() {
     private fun observeFavorites() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                favoritesRepository.observeAll().collect { favorites ->
+                viewModel.favorites.collect { favorites ->
                     adapter.submitList(favorites)
                     binding.textEmpty.isVisible = favorites.isEmpty()
                     binding.recyclerFavorites.isVisible = favorites.isNotEmpty()
@@ -82,16 +80,12 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun removeFavorite(favorite: FavoriteEntity) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            favoritesRepository.remove(favorite.mealId)
-            Snackbar.make(binding.root, R.string.favorite_removed, Snackbar.LENGTH_LONG)
-                .setAction(R.string.action_undo) {
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        favoritesRepository.restore(favorite)
-                    }
-                }
-                .show()
-        }
+        viewModel.remove(favorite.mealId)
+        Snackbar.make(binding.root, R.string.favorite_removed, Snackbar.LENGTH_LONG)
+            .setAction(R.string.action_undo) {
+                viewModel.restore(favorite)
+            }
+            .show()
     }
 
     override fun onDestroyView() {

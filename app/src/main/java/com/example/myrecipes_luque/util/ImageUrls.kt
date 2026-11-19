@@ -1,18 +1,24 @@
 package com.example.myrecipes_luque.util
 
 /**
- * TheMealDB sert des images meal souvent lourdes.
- * Pour les listes, on privilégie la variante /preview (plus légère).
+ * TheMealDB — URLs images.
+ * Les cards image-forward utilisent la photo pleine (pas /preview, trop pixelisée).
  */
 object ImageUrls {
 
-    fun listThumb(url: String?): String? {
+    /** URL pleine résolution (détail + listes cards). */
+    fun full(url: String?): String? {
         if (url.isNullOrBlank()) return null
-        if (url.contains("/preview") || url.endsWith("-small.png")) return url
-        // Meal thumbs: .../meals/xxx.jpg → .../meals/xxx.jpg/preview
-        if (url.contains("/media/meals/")) {
-            return if (url.endsWith("/preview")) url else "$url/preview"
-        }
-        return url
+        return url.removeSuffix("/preview")
+    }
+
+    fun ingredientThumb(baseUrl: String, ingredientName: String): String {
+        val normalized = ingredientName.trim().replace(' ', '_')
+        return "${baseUrl.trimEnd('/')}/$normalized.png"
+    }
+
+    fun ingredientThumbSmall(baseUrl: String, ingredientName: String): String {
+        val normalized = ingredientName.trim().replace(' ', '_')
+        return "${baseUrl.trimEnd('/')}/$normalized-Small.png"
     }
 }

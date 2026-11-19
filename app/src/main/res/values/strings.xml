@@ -2,11 +2,24 @@
 <resources>
     <string name="app_name">MyRecipes</string>
     <string name="nav_categories">Catégories</string>
+    <string name="nav_cuisines">Cuisines</string>
+    <string name="nav_surprise">Surprise</string>
     <string name="nav_search">Recherche</string>
     <string name="nav_favorites">Favoris</string>
     <string name="nav_header_subtitle">Découvrir · Chercher · Favoris</string>
     <string name="nav_open_drawer">Ouvrir le menu</string>
     <string name="nav_close_drawer">Fermer le menu</string>
+    <string name="offline_banner">Hors ligne — reconnexion automatique</string>
+    <string name="action_retry">Réessayer</string>
+    <string name="action_share">Partager</string>
+    <string name="action_youtube">Vidéo</string>
+    <string name="share_recipe_subject">Recette : %1$s</string>
+    <string name="share_recipe_text">%1$s (%2$s)\n%3$s</string>
+    <string name="share_chooser_title">Partager la recette</string>
+    <string name="error_loading_surprise">Impossible de charger une recette surprise.\nVérifie ta connexion puis réessaie.</string>
+    <string name="error_loading_areas">Impossible de charger les cuisines.\nVérifie ta connexion puis réessaie.</string>
+    <string name="empty_areas">Aucune cuisine disponible.</string>
+    <string name="empty_recipes_area">Aucune recette trouvée pour cette cuisine.</string>
     <string name="favorites_empty">Aucune recette en favoris.\nAjoute-en depuis le détail d’une recette.</string>
     <string name="search_hint">Rechercher une recette…</string>
     <string name="search_prompt">Saisis le nom d’une recette pour commencer.</string>
@@ -17,6 +30,8 @@
     <string name="category_thumb_description">Vignette de la catégorie</string>
     <string name="recipe_thumb_description">Vignette de la recette</string>
     <string name="recipe_photo_description">Photo de la recette</string>
+    <string name="ingredient_thumb_description">Vignette de l’ingrédient</string>
+    <string name="area_thumb_description">Cuisine</string>
     <string name="error_loading_categories">Impossible de charger les catégories.\nVérifie ta connexion puis réessaie.</string>
     <string name="error_loading_recipes">Impossible de charger les recettes.\nVérifie ta connexion puis réessaie.</string>
     <string name="error_loading_recipe_detail">Impossible de charger le détail de la recette.\nVérifie ta connexion puis réessaie.</string>
@@ -48,7 +63,10 @@
     <string name="cook_progress_a11y">Progression : étape %1$d sur %2$d</string>
     <string name="ingredient_line_format">%1$s — %2$s</string>
     <string name="steps_count">%1$d étapes</string>
-    <string name="step_index_format">%1$d.</string>
+    <string name="ingredients_count">%1$d ingrédients</string>
+    <string name="ingredients_more_count">+ %1$d ingrédients</string>
+    <string name="step_index_format">%1$d</string>
+    <string name="cook_progress_label">%1$d / %2$d</string>
     <string name="favorite_added">Recette ajoutée aux favoris</string>
     <string name="favorite_removed">Recette retirée des favoris</string>
     <string name="value_unavailable">—</string>

@@ -2,11 +2,24 @@
 <resources>
     <string name="app_name">MyRecipes</string>
     <string name="nav_categories">Categories</string>
+    <string name="nav_cuisines">Cuisines</string>
+    <string name="nav_surprise">Surprise</string>
     <string name="nav_search">Search</string>
     <string name="nav_favorites">Favorites</string>
     <string name="nav_header_subtitle">Discover · Search · Favorites</string>
     <string name="nav_open_drawer">Open menu</string>
     <string name="nav_close_drawer">Close menu</string>
+    <string name="offline_banner">Offline — reconnecting automatically</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_share">Share</string>
+    <string name="action_youtube">Video</string>
+    <string name="share_recipe_subject">Recipe: %1$s</string>
+    <string name="share_recipe_text">%1$s (%2$s)\n%3$s</string>
+    <string name="share_chooser_title">Share recipe</string>
+    <string name="error_loading_surprise">Unable to load a surprise recipe.\nCheck your connection and try again.</string>
+    <string name="error_loading_areas">Unable to load cuisines.\nCheck your connection and try again.</string>
+    <string name="empty_areas">No cuisines available.</string>
+    <string name="empty_recipes_area">No recipes found for this cuisine.</string>
     <string name="favorites_empty">No favorite recipes yet.\nAdd some from a recipe’s detail screen.</string>
     <string name="search_hint">Search for a recipe…</string>
     <string name="search_prompt">Type a recipe name to get started.</string>
@@ -17,6 +30,8 @@
     <string name="category_thumb_description">Category thumbnail</string>
     <string name="recipe_thumb_description">Recipe thumbnail</string>
     <string name="recipe_photo_description">Recipe photo</string>
+    <string name="ingredient_thumb_description">Ingredient thumbnail</string>
+    <string name="area_thumb_description">Cuisine</string>
     <string name="error_loading_categories">Unable to load categories.\nCheck your connection and try again.</string>
     <string name="error_loading_recipes">Unable to load recipes.\nCheck your connection and try again.</string>
     <string name="error_loading_recipe_detail">Unable to load recipe details.\nCheck your connection and try again.</string>
@@ -48,7 +63,10 @@
     <string name="cook_progress_a11y">Progress: step %1$d of %2$d</string>
     <string name="ingredient_line_format">%1$s — %2$s</string>
     <string name="steps_count">%1$d steps</string>
-    <string name="step_index_format">%1$d.</string>
+    <string name="ingredients_count">%1$d ingredients</string>
+    <string name="ingredients_more_count">+ %1$d ingredients</string>
+    <string name="step_index_format">%1$d</string>
+    <string name="cook_progress_label">%1$d / %2$d</string>
     <string name="favorite_added">Recipe added to favorites</string>
     <string name="favorite_removed">Recipe removed from favorites</string>
     <string name="value_unavailable">—</string>

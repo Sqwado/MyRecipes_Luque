@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,10 +8,21 @@
     android:orientation="horizontal"
     android:paddingVertical="@dimen/detail_ingredient_padding_vertical">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_ingredient"
+        android:layout_width="@dimen/ingredient_thumb_size"
+        android:layout_height="@dimen/ingredient_thumb_size"
+        android:background="@drawable/bg_placeholder_thumb"
+        android:contentDescription="@string/ingredient_thumb_description"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.MyRecipes.Thumb"
+        tools:src="@mipmap/ic_launcher" />
+
     <TextView
         android:id="@+id/text_ingredient"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_lg"
         android:layout_weight="1"
         android:textAppearance="?attr/textAppearanceBodyMedium"
         android:textColor="?attr/colorOnSurface"

@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.MyRecipes.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="top"
-    android:orientation="horizontal"
-    android:paddingVertical="@dimen/spacing_sm">
+    android:layout_marginBottom="@dimen/spacing_sm"
+    android:clickable="true"
+    android:focusable="true"
+    app:rippleColor="?attr/colorPrimaryContainer">
 
-    <TextView
-        android:id="@+id/text_step_index"
-        android:layout_width="@dimen/instruction_step_index_width"
+    <LinearLayout
+        android:id="@+id/step_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:textAppearance="?attr/textAppearanceLabelLarge"
-        android:textColor="?attr/colorPrimary"
-        tools:text="1." />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/spacing_lg"
+        android:paddingVertical="@dimen/spacing_md">
 
-    <TextView
-        android:id="@+id/text_step_body"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:lineSpacingExtra="@dimen/spacing_xs"
-        android:textAppearance="?attr/textAppearanceBodyMedium"
-        android:textColor="?attr/colorOnSurface"
-        tools:text="Preheat the oven to 180°C." />
+        <TextView
+            android:id="@+id/text_step_index"
+            android:layout_width="@dimen/instruction_step_badge_size"
+            android:layout_height="@dimen/instruction_step_badge_size"
+            android:background="@drawable/bg_step_badge"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceTitleSmall"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            tools:text="1" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/text_step_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_lg"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="2"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurface"
+            tools:text="Preheat the oven to 180°C and line a baking tray." />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
