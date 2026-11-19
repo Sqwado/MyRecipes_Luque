@@ -4,4 +4,15 @@
     <integer name="scroll_top_threshold">8</integer>
     <integer name="instructions_collapsed_max_lines">2</integer>
     <integer name="ingredients_collapsed_count">4</integer>
+
+    <integer name="nav_anim_duration">320</integer>
+    <integer name="nav_fade_duration">220</integer>
+    <integer name="nav_cook_duration">240</integer>
+    <integer name="ui_fade_duration">280</integer>
+    <integer name="ui_fade_out_duration">200</integer>
+    <integer name="ui_fab_duration">220</integer>
+    <integer name="ui_expand_duration">280</integer>
+    <integer name="list_item_anim_add">280</integer>
+    <integer name="list_item_anim_remove">220</integer>
+    <integer name="list_item_anim_move">250</integer>
 </resources>

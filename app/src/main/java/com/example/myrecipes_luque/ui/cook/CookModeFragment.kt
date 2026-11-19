@@ -5,26 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.databinding.FragmentCookModeBinding
-import com.example.myrecipes_luque.databinding.ItemCookIngredientBinding
-import com.example.myrecipes_luque.util.ThumbLoader
 
 class CookModeFragment : Fragment() {
 
     private var _binding: FragmentCookModeBinding? = null
     private val binding get() = _binding!!
 
-    private var ingredients: List<String> = emptyList()
-    private var ingredientNames: List<String> = emptyList()
-    private var steps: List<String> = emptyList()
-    private var pageIndex: Int = 0
+    private var pageCount: Int = 1
 
-    private val pageCount: Int
-        get() = 1 + steps.size
+    private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            updateChrome(position)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,114 +37,110 @@ class CookModeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ingredients = requireArguments().getStringArray(ARG_INGREDIENTS)?.toList().orEmpty()
-        ingredientNames = requireArguments().getStringArray(ARG_INGREDIENT_NAMES)?.toList()
+        val ingredients = requireArguments().getStringArray(ARG_INGREDIENTS)?.toList().orEmpty()
+        val ingredientNames = requireArguments().getStringArray(ARG_INGREDIENT_NAMES)?.toList()
             .orEmpty()
             .ifEmpty { ingredients }
-        steps = requireArguments().getStringArray(ARG_STEPS)?.toList().orEmpty()
-        pageIndex = savedInstanceState?.getInt(STATE_PAGE_INDEX) ?: 0
+        val steps = requireArguments().getStringArray(ARG_STEPS)?.toList().orEmpty()
 
         val mealName = requireArguments().getString(ARG_MEAL_NAME).orEmpty()
         (requireActivity() as AppCompatActivity).supportActionBar?.title =
             mealName.ifBlank { getString(R.string.cook_mode_title) }
 
+        val pages = buildList {
+            add(
+                CookPage.Prep(
+                    lines = ingredients.ifEmpty { listOf(getString(R.string.value_unavailable)) },
+                    names = ingredientNames.ifEmpty {
+                        listOf(getString(R.string.value_unavailable))
+                    },
+                ),
+            )
+            val stepBodies = steps.ifEmpty { listOf(getString(R.string.value_unavailable)) }
+            stepBodies.forEachIndexed { index, body ->
+                add(
+                    CookPage.Step(
+                        number = index + 1,
+                        total = stepBodies.size,
+                        body = body,
+                    ),
+                )
+            }
+        }
+        pageCount = pages.size
+
+        val adapter = CookPagerAdapter(pages)
+        binding.pagerCook.adapter = adapter
+        // Garde les pages en mémoire : le retour vers Préparer ne ré-inflate / re-Glide pas
+        binding.pagerCook.offscreenPageLimit = pageCount.coerceAtLeast(1)
+
+        binding.pagerCook.post {
+            val recycler = binding.pagerCook.getChildAt(0) as? RecyclerView ?: return@post
+            recycler.overScrollMode = View.OVER_SCROLL_NEVER
+            recycler.itemAnimator = null
+            recycler.setItemViewCacheSize(pageCount)
+        }
+
+        val initial = savedInstanceState?.getInt(STATE_PAGE_INDEX)
+            ?.coerceIn(0, pageCount - 1)
+            ?: 0
+        binding.pagerCook.setCurrentItem(initial, false)
+        updateChrome(initial)
+
+        binding.pagerCook.registerOnPageChangeCallback(pageChangeCallback)
+
         binding.buttonPrevious.setOnClickListener {
-            if (pageIndex > 0) {
-                pageIndex -= 1
-                renderPage()
+            val current = binding.pagerCook.currentItem
+            if (current > 0) {
+                binding.pagerCook.setCurrentItem(current - 1, true)
             }
         }
         binding.buttonNext.setOnClickListener {
-            if (pageIndex >= pageCount - 1) {
+            val current = binding.pagerCook.currentItem
+            if (current >= pageCount - 1) {
+                // Pop instantané (nav_instant) — pas d’anim sur ViewPager lourd
                 findNavController().navigateUp()
             } else {
-                pageIndex += 1
-                renderPage()
+                binding.pagerCook.setCurrentItem(current + 1, true)
             }
         }
-
-        populateIngredients()
-        renderPage()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(STATE_PAGE_INDEX, pageIndex)
+        _binding?.let { outState.putInt(STATE_PAGE_INDEX, it.pagerCook.currentItem) }
     }
 
-    private fun populateIngredients() {
-        binding.containerCookIngredients.removeAllViews()
-        val inflater = layoutInflater
-        ingredients.forEachIndexed { index, line ->
-            val itemBinding = ItemCookIngredientBinding.inflate(
-                inflater,
-                binding.containerCookIngredients,
-                false,
-            )
-            itemBinding.checkIngredient.text = line
-            val name = ingredientNames.getOrNull(index) ?: line
-            ThumbLoader.loadIngredient(itemBinding.imageIngredient, name)
-            binding.containerCookIngredients.addView(itemBinding.root)
-        }
-    }
-
-    private fun renderPage() {
-        val safeIndex = pageIndex.coerceIn(0, (pageCount - 1).coerceAtLeast(0))
-        pageIndex = safeIndex
-
+    private fun updateChrome(position: Int) {
         val progressPercent = if (pageCount <= 1) {
             100
         } else {
-            ((safeIndex + 1) * 100) / pageCount
+            ((position + 1) * 100) / pageCount
         }
-        binding.progressCook.setProgressCompat(progressPercent, true)
+        // Pas d’anim de progress pendant le swipe (évite la concurrence avec le pager)
+        binding.progressCook.setProgressCompat(progressPercent, false)
         binding.progressCook.contentDescription = getString(
             R.string.cook_progress_a11y,
-            safeIndex + 1,
+            position + 1,
             pageCount,
         )
         binding.textCookProgressLabel.text = getString(
             R.string.cook_progress_label,
-            safeIndex + 1,
+            position + 1,
             pageCount,
         )
-
-        val isPrep = safeIndex == 0
-        binding.containerCookIngredients.isVisible = isPrep
-        binding.cardCookStep.isVisible = !isPrep
-        binding.textCookBadge.isVisible = !isPrep
-
-        if (isPrep) {
-            binding.textCookPhase.setText(R.string.cook_prep_title)
-            binding.textCookSubtitle.setText(R.string.cook_prep_subtitle)
-            binding.textCookSubtitle.isVisible = true
-        } else {
-            val stepNumber = safeIndex
-            binding.textCookBadge.text = getString(R.string.step_index_format, stepNumber)
-            binding.textCookPhase.text = getString(
-                R.string.cook_step_title,
-                stepNumber,
-                steps.size,
-            )
-            binding.textCookSubtitle.isVisible = false
-            binding.textCookStep.text = steps.getOrElse(stepNumber - 1) {
-                getString(R.string.value_unavailable)
-            }
-        }
-
-        binding.buttonPrevious.isEnabled = safeIndex > 0
+        binding.buttonPrevious.isEnabled = position > 0
         binding.buttonNext.setText(
-            if (safeIndex >= pageCount - 1) {
+            if (position >= pageCount - 1) {
                 R.string.action_finish_cooking
             } else {
                 R.string.action_next_step
             },
         )
-
-        binding.cookContentScroll.scrollTo(0, 0)
     }
 
     override fun onDestroyView() {
+        binding.pagerCook.unregisterOnPageChangeCallback(pageChangeCallback)
         super.onDestroyView()
         _binding = null
     }

@@ -252,6 +252,17 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- CoordinatorLayout = parent Snackbar, derrière la bottom bar pour le slide -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/snackbar_host"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="0dp"

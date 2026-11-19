@@ -14,6 +14,8 @@ import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.data.remote.MealDbClient
 import com.example.myrecipes_luque.databinding.FragmentRecipesBinding
 import com.example.myrecipes_luque.ui.detail.RecipeDetailFragment
+import com.example.myrecipes_luque.util.enableAppItemAnimations
+import com.example.myrecipes_luque.util.revealIn
 import com.example.myrecipes_luque.util.setupScrollToTop
 import kotlinx.coroutines.launch
 
@@ -53,6 +55,7 @@ class RecipesFragment : Fragment() {
         val spanCount = resources.getInteger(R.integer.list_span_count)
         binding.recyclerRecipes.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerRecipes.adapter = adapter
+        binding.recyclerRecipes.enableAppItemAnimations()
         binding.recyclerRecipes.setupScrollToTop(
             fab = binding.fabScrollTop,
             threshold = resources.getInteger(R.integer.scroll_top_threshold),
@@ -84,15 +87,15 @@ class RecipesFragment : Fragment() {
                         },
                     )
                     binding.buttonRetry.isVisible = false
-                    binding.stateContainer.isVisible = true
+                    binding.stateContainer.revealIn()
                 } else {
                     adapter.submitList(meals)
-                    binding.recyclerRecipes.isVisible = true
+                    binding.recyclerRecipes.revealIn()
                 }
             } catch (_: Exception) {
                 binding.textState.setText(R.string.error_loading_recipes)
                 binding.buttonRetry.isVisible = true
-                binding.stateContainer.isVisible = true
+                binding.stateContainer.revealIn()
             } finally {
                 binding.progress.isVisible = false
             }

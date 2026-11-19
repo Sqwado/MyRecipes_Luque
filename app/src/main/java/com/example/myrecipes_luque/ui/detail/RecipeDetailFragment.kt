@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,10 +24,13 @@ import com.example.myrecipes_luque.databinding.ItemIngredientBinding
 import com.example.myrecipes_luque.databinding.ItemInstructionStepBinding
 import com.example.myrecipes_luque.ui.cook.CookModeFragment
 import com.example.myrecipes_luque.ui.favorites.FavoritesViewModel
+import com.example.myrecipes_luque.util.AppSnackbar
 import com.example.myrecipes_luque.util.InstructionParser
 import com.example.myrecipes_luque.util.NutriScoreCalculator
 import com.example.myrecipes_luque.util.ThumbLoader
-import com.google.android.material.snackbar.Snackbar
+import com.example.myrecipes_luque.util.beginExpandTransition
+import com.example.myrecipes_luque.util.revealIn
+import com.example.myrecipes_luque.util.slideUpIn
 import kotlinx.coroutines.launch
 
 class RecipeDetailFragment : Fragment() {
@@ -35,6 +39,7 @@ class RecipeDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val favoritesViewModel: FavoritesViewModel by activityViewModels()
+    private val sessionViewModel: RecipeSessionViewModel by activityViewModels()
 
     private var currentMeal: MealDetail? = null
     private var isFavorite: Boolean = false
@@ -71,6 +76,8 @@ class RecipeDetailFragment : Fragment() {
         binding.chipYoutube.setOnClickListener { openYoutube() }
 
         observeFavoriteState(mealId)
+        // Attend le bind (cache) avant d’afficher → retour cuisine sans frame vide
+        postponeEnterTransition()
         loadDetail(mealId)
     }
 
@@ -102,11 +109,19 @@ class RecipeDetailFragment : Fragment() {
         val meal = currentMeal ?: return
         if (isFavorite) {
             favoritesViewModel.remove(meal.id)
-            Snackbar.make(binding.root, R.string.favorite_removed, Snackbar.LENGTH_SHORT).show()
+            showDetailSnackbar(R.string.favorite_removed)
         } else {
             favoritesViewModel.add(meal)
-            Snackbar.make(binding.root, R.string.favorite_added, Snackbar.LENGTH_SHORT).show()
+            showDetailSnackbar(R.string.favorite_added)
         }
+    }
+
+    private fun showDetailSnackbar(messageRes: Int) {
+        AppSnackbar.show(
+            host = binding.snackbarHost,
+            messageRes = messageRes,
+            slideUnder = binding.bottomBar,
+        )
     }
 
     private fun shareRecipe() {
@@ -157,32 +172,59 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun loadDetail(mealId: String) {
-        binding.progress.isVisible = true
         binding.stateContainer.isVisible = false
+
+        // Retour cuisine / recreation : contenu déjà connu → pas de flash ni d’anim d’entrée
+        sessionViewModel.getIfMatch(mealId)?.let { cached ->
+            showMeal(cached, animateEntrance = false)
+            binding.root.doOnPreDraw {
+                startPostponedEnterTransition()
+                true
+            }
+            return
+        }
+
+        binding.progress.isVisible = true
         binding.contentScroll.isVisible = false
         binding.bottomBar.isVisible = false
+        startPostponedEnterTransition()
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val meal = MealDbClient.api.getMealById(mealId).meals?.firstOrNull()
                 if (meal == null) {
                     binding.textError.setText(R.string.error_loading_recipe_detail)
-                    binding.stateContainer.isVisible = true
+                    binding.stateContainer.revealIn()
                 } else {
-                    currentMeal = meal
-                    bindMeal(meal)
-                    updateFavoriteButton()
-                    binding.buttonStartCooking.isEnabled = true
-                    binding.buttonShare.isEnabled = true
-                    binding.contentScroll.isVisible = true
-                    binding.bottomBar.isVisible = true
+                    sessionViewModel.put(meal)
+                    showMeal(meal, animateEntrance = true)
                 }
             } catch (_: Exception) {
                 binding.textError.setText(R.string.error_loading_recipe_detail)
-                binding.stateContainer.isVisible = true
+                binding.stateContainer.revealIn()
             } finally {
                 binding.progress.isVisible = false
             }
+        }
+    }
+
+    private fun showMeal(meal: MealDetail, animateEntrance: Boolean) {
+        currentMeal = meal
+        bindMeal(meal)
+        updateFavoriteButton()
+        binding.buttonStartCooking.isEnabled = true
+        binding.buttonShare.isEnabled = true
+        binding.progress.isVisible = false
+        if (animateEntrance) {
+            binding.contentScroll.revealIn()
+            binding.bottomBar.slideUpIn()
+        } else {
+            binding.contentScroll.isVisible = true
+            binding.contentScroll.alpha = 1f
+            binding.contentScroll.translationY = 0f
+            binding.bottomBar.isVisible = true
+            binding.bottomBar.alpha = 1f
+            binding.bottomBar.translationY = 0f
         }
     }
 
@@ -211,22 +253,16 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun toggleIngredients() {
+        (binding.contentScroll.getChildAt(0) as? ViewGroup)?.beginExpandTransition()
         ingredientsExpanded = !ingredientsExpanded
-        renderIngredients()
+        applyIngredientsExpandedState()
     }
 
     private fun renderIngredients() {
-        val collapsedCount = resources.getInteger(R.integer.ingredients_collapsed_count)
-        val visible = when {
-            ingredientLines.isEmpty() -> emptyList()
-            ingredientsExpanded || ingredientLines.size <= collapsedCount -> ingredientLines
-            else -> ingredientLines.take(collapsedCount)
-        }
-
         binding.containerIngredients.removeAllViews()
         val unavailable = getString(R.string.value_unavailable)
         val inflater = layoutInflater
-        visible.forEach { line ->
+        ingredientLines.forEach { line ->
             val itemBinding = ItemIngredientBinding.inflate(
                 inflater,
                 binding.containerIngredients,
@@ -237,8 +273,20 @@ class RecipeDetailFragment : Fragment() {
             ThumbLoader.loadIngredient(itemBinding.imageIngredient, line.name)
             binding.containerIngredients.addView(itemBinding.root)
         }
+        applyIngredientsExpandedState()
+    }
 
+    private fun applyIngredientsExpandedState() {
+        val collapsedCount = resources.getInteger(R.integer.ingredients_collapsed_count)
         val canToggle = ingredientLines.size > collapsedCount
+        val showCount = when {
+            !canToggle || ingredientsExpanded -> ingredientLines.size
+            else -> collapsedCount
+        }
+        for (i in 0 until binding.containerIngredients.childCount) {
+            binding.containerIngredients.getChildAt(i).isVisible = i < showCount
+        }
+
         binding.buttonToggleIngredients.isVisible = canToggle
         val remaining = (ingredientLines.size - collapsedCount).coerceAtLeast(0)
         val showMore = canToggle && !ingredientsExpanded && remaining > 0
@@ -259,16 +307,15 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun toggleInstructions() {
+        (binding.contentScroll.getChildAt(0) as? ViewGroup)?.beginExpandTransition()
         instructionsExpanded = !instructionsExpanded
-        renderInstructionSteps()
+        applyInstructionsExpandedState()
     }
 
     private fun renderInstructionSteps() {
         val steps = instructionSteps.ifEmpty {
             listOf(getString(R.string.value_unavailable))
         }
-        val maxLinesCollapsed = resources.getInteger(R.integer.instructions_collapsed_max_lines)
-
         binding.containerInstructionSteps.removeAllViews()
         val inflater = layoutInflater
         steps.forEachIndexed { index, step ->
@@ -279,12 +326,21 @@ class RecipeDetailFragment : Fragment() {
             )
             itemBinding.textStepIndex.text = getString(R.string.step_index_format, index + 1)
             itemBinding.textStepBody.text = step
-            applyStepCompactState(itemBinding, instructionsExpanded, maxLinesCollapsed)
             itemBinding.root.setOnClickListener { toggleInstructions() }
             binding.containerInstructionSteps.addView(itemBinding.root)
         }
+        applyInstructionsExpandedState()
+    }
 
-        binding.buttonToggleInstructions.isVisible = steps.isNotEmpty()
+    private fun applyInstructionsExpandedState() {
+        val maxLinesCollapsed = resources.getInteger(R.integer.instructions_collapsed_max_lines)
+        for (i in 0 until binding.containerInstructionSteps.childCount) {
+            val root = binding.containerInstructionSteps.getChildAt(i)
+            val itemBinding = ItemInstructionStepBinding.bind(root)
+            applyStepCompactState(itemBinding, instructionsExpanded, maxLinesCollapsed)
+        }
+        binding.buttonToggleInstructions.isVisible =
+            binding.containerInstructionSteps.childCount > 0
         if (instructionsExpanded) {
             binding.buttonToggleInstructions.setText(R.string.action_collapse_steps)
             binding.buttonToggleInstructions.setIconResource(R.drawable.ic_expand_less)

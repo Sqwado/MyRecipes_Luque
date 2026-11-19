@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- L’écran du dessous ne bouge pas pendant le pop (évite l’accroche). -->
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@integer/nav_cook_duration"
+    android:fromYDelta="0"
+    android:toYDelta="0" />

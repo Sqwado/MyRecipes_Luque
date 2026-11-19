@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:overScrollMode="never"
+    android:paddingHorizontal="@dimen/detail_content_padding_horizontal"
+    android:paddingTop="@dimen/spacing_xxl"
+    android:paddingBottom="@dimen/spacing_xxl">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_prep_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cook_prep_title"
+            android:textAppearance="?attr/textAppearanceHeadlineSmall"
+            android:textColor="?attr/colorOnSurface" />
+
+        <TextView
+            android:id="@+id/text_prep_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="@string/cook_prep_subtitle"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <LinearLayout
+            android:id="@+id/container_cook_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxl"
+            android:orientation="vertical"
+            tools:ignore="UselessLeaf" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

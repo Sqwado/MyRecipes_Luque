@@ -1,7 +1,6 @@
 package com.example.myrecipes_luque.util
 
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +17,8 @@ fun RecyclerView.setupScrollToTop(
 
     addOnScrollListener(object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            fab.isVisible = layoutManager.findFirstVisibleItemPosition() > threshold
+            val show = layoutManager.findFirstVisibleItemPosition() > threshold
+            if (show) fab.showFabAnimated() else fab.hideFabAnimated()
             onScrolledExtra?.invoke(dy)
         }
     })

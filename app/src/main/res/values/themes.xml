@@ -28,6 +28,9 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="shapeAppearanceCornerMedium">@style/ShapeAppearance.MyRecipes.Medium</item>
         <item name="shapeAppearanceCornerLarge">@style/ShapeAppearance.MyRecipes.Large</item>
+        <item name="snackbarStyle">@style/Widget.MyRecipes.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.MyRecipes.SnackbarText</item>
+        <item name="snackbarButtonStyle">@style/Widget.MyRecipes.SnackbarButton</item>
     </style>
 
     <style name="Theme.MyRecipes_Luque" parent="Base.Theme.MyRecipes_Luque" />
@@ -63,5 +66,19 @@
         <item name="titleTextColor">?attr/colorOnSurface</item>
         <item name="subtitleTextColor">?attr/colorOnSurfaceVariant</item>
         <item name="navigationIconTint">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.MyRecipes.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="animationMode">slide</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MyRecipes.Medium</item>
+    </style>
+
+    <style name="Widget.MyRecipes.SnackbarText" parent="Widget.Material3.Snackbar.TextView">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.MyRecipes.SnackbarButton" parent="Widget.Material3.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/brand_peach</item>
     </style>
 </resources>

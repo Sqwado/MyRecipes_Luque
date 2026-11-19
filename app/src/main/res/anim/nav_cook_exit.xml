@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Le détail reste immobile quand on ouvre la cuisine. -->
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@integer/nav_cook_duration"
+    android:fromYDelta="0"
+    android:toYDelta="0" />

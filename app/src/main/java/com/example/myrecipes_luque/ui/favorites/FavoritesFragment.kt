@@ -16,6 +16,9 @@ import com.example.myrecipes_luque.R
 import com.example.myrecipes_luque.data.local.FavoriteEntity
 import com.example.myrecipes_luque.databinding.FragmentFavoritesBinding
 import com.example.myrecipes_luque.ui.detail.RecipeDetailFragment
+import com.example.myrecipes_luque.util.AppSnackbar
+import com.example.myrecipes_luque.util.enableAppItemAnimations
+import com.example.myrecipes_luque.util.revealIn
 import com.example.myrecipes_luque.util.setupScrollToTop
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -46,6 +49,7 @@ class FavoritesFragment : Fragment() {
         val spanCount = resources.getInteger(R.integer.list_span_count)
         binding.recyclerFavorites.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerFavorites.adapter = adapter
+        binding.recyclerFavorites.enableAppItemAnimations()
         binding.recyclerFavorites.setupScrollToTop(
             fab = binding.fabScrollTop,
             threshold = resources.getInteger(R.integer.scroll_top_threshold),
@@ -58,10 +62,13 @@ class FavoritesFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.favorites.collect { favorites ->
                     adapter.submitList(favorites)
-                    binding.textEmpty.isVisible = favorites.isEmpty()
-                    binding.recyclerFavorites.isVisible = favorites.isNotEmpty()
                     if (favorites.isEmpty()) {
+                        binding.recyclerFavorites.isVisible = false
                         binding.fabScrollTop.isVisible = false
+                        binding.textEmpty.revealIn()
+                    } else {
+                        binding.textEmpty.isVisible = false
+                        binding.recyclerFavorites.revealIn()
                     }
                 }
             }
@@ -81,11 +88,13 @@ class FavoritesFragment : Fragment() {
 
     private fun removeFavorite(favorite: FavoriteEntity) {
         viewModel.remove(favorite.mealId)
-        Snackbar.make(binding.root, R.string.favorite_removed, Snackbar.LENGTH_LONG)
-            .setAction(R.string.action_undo) {
-                viewModel.restore(favorite)
-            }
-            .show()
+        AppSnackbar.show(
+            host = binding.root,
+            messageRes = R.string.favorite_removed,
+            duration = Snackbar.LENGTH_LONG,
+            actionRes = R.string.action_undo,
+            onAction = { viewModel.restore(favorite) },
+        )
     }
 
     override fun onDestroyView() {

@@ -7,18 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.myrecipes_luque.data.remote.MealDbClient
 import com.example.myrecipes_luque.databinding.ActivityMainBinding
 import com.example.myrecipes_luque.ui.detail.RecipeDetailFragment
+import com.example.myrecipes_luque.util.AppSnackbar
+import com.example.myrecipes_luque.util.NavAnims
 import com.example.myrecipes_luque.util.NetworkMonitor
+import com.example.myrecipes_luque.util.slideBannerIn
+import com.example.myrecipes_luque.util.slideBannerOut
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -68,7 +69,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 else -> {
-                    val handled = NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    val destinationId = menuItem.itemId
+                    val handled = navController.graph.findNode(destinationId) != null
+                    if (handled && navController.currentDestination?.id != destinationId) {
+                        navController.navigate(destinationId, null, NavAnims.drawer(navController))
+                    }
                     if (handled) {
                         binding.drawerLayout.closeDrawers()
                     }
@@ -91,7 +96,8 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         networkMonitor.start { online ->
-            binding.offlineBanner.isVisible = !online
+            if (online) binding.offlineBanner.slideBannerOut()
+            else binding.offlineBanner.slideBannerIn()
         }
     }
 
@@ -102,7 +108,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun openSurpriseRecipe() {
         if (!networkMonitor.isOnline()) {
-            Snackbar.make(binding.main, R.string.error_loading_surprise, Snackbar.LENGTH_LONG).show()
+            AppSnackbar.show(
+                host = binding.main,
+                messageRes = R.string.error_loading_surprise,
+                duration = Snackbar.LENGTH_LONG,
+            )
             return
         }
         lifecycleScope.launch {
@@ -123,15 +133,17 @@ class MainActivity : AppCompatActivity() {
                     RecipeDetailFragment.ARG_MEAL_ID to meal.id,
                     RecipeDetailFragment.ARG_MEAL_NAME to meal.name,
                 )
-                // pop le détail courant pour forcer un nouveau fragment à chaque Surprise
-                val options = NavOptions.Builder()
-                    .setLaunchSingleTop(false)
-                    .setPopUpTo(R.id.recipeDetailFragment, inclusive = true)
-                    .build()
-                navController.navigate(R.id.recipeDetailFragment, args, options)
+                navController.navigate(
+                    R.id.recipeDetailFragment,
+                    args,
+                    NavAnims.surpriseDetail(),
+                )
             } catch (_: Exception) {
-                Snackbar.make(binding.main, R.string.error_loading_surprise, Snackbar.LENGTH_LONG)
-                    .show()
+                AppSnackbar.show(
+                    host = binding.main,
+                    messageRes = R.string.error_loading_surprise,
+                    duration = Snackbar.LENGTH_LONG,
+                )
             }
         }
     }

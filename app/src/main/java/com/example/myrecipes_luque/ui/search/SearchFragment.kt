@@ -19,6 +19,8 @@ import com.example.myrecipes_luque.data.remote.MealDbClient
 import com.example.myrecipes_luque.databinding.FragmentSearchBinding
 import com.example.myrecipes_luque.ui.detail.RecipeDetailFragment
 import com.example.myrecipes_luque.ui.recipes.RecipesAdapter
+import com.example.myrecipes_luque.util.enableAppItemAnimations
+import com.example.myrecipes_luque.util.revealIn
 import com.example.myrecipes_luque.util.setupScrollToTop
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -62,6 +64,7 @@ class SearchFragment : Fragment() {
         val spanCount = resources.getInteger(R.integer.list_span_count)
         binding.recyclerSearch.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerSearch.adapter = adapter
+        binding.recyclerSearch.enableAppItemAnimations()
         binding.recyclerSearch.setupScrollToTop(
             fab = binding.fabScrollTop,
             threshold = resources.getInteger(R.integer.scroll_top_threshold),
@@ -140,16 +143,16 @@ class SearchFragment : Fragment() {
                 adapter.submitList(emptyList())
                 binding.fabScrollTop.isVisible = false
                 binding.textMessage.setText(R.string.search_empty)
-                binding.textMessage.isVisible = true
+                binding.textMessage.revealIn()
             } else {
                 adapter.submitList(meals)
-                binding.recyclerSearch.isVisible = true
+                binding.recyclerSearch.revealIn()
             }
         } catch (_: Exception) {
             adapter.submitList(emptyList())
             binding.fabScrollTop.isVisible = false
             binding.textMessage.setText(R.string.error_loading_search)
-            binding.textMessage.isVisible = true
+            binding.textMessage.revealIn()
         } finally {
             binding.progress.isVisible = false
         }

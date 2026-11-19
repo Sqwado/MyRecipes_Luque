@@ -3,7 +3,6 @@ package com.example.myrecipes_luque.util
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.myrecipes_luque.R
 
 object ThumbLoader {
@@ -22,7 +21,7 @@ object ThumbLoader {
             .override(widthPx, heightPx)
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .transition(DrawableTransitionOptions.withCrossFade(150))
+            // Pas de crossfade : évite placeholder → image → flash / disparition
             .into(imageView)
     }
 
@@ -37,7 +36,6 @@ object ThumbLoader {
             .override(widthPx, heightPx)
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .transition(DrawableTransitionOptions.withCrossFade(200))
             .into(imageView)
     }
 
@@ -53,7 +51,6 @@ object ThumbLoader {
             .override(sizePx, sizePx)
             .centerCrop()
             .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .transition(DrawableTransitionOptions.withCrossFade(120))
             .into(imageView)
     }
 
